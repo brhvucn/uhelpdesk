@@ -6,6 +6,8 @@ Projektleder: Brian Hvarregaard (brhv@ucn.dk)
 
 Deltagere:
 
+## Samarbejdspartnere
+
 ## Indledende Scope
 Der skal udvikles et system til at håndtere support tickets med. Selve systemet er et selvstændigt system med brugernavn og password adgang. Det skal være muligt for kunder/medarbejdere at oprette tickets (fx. en computer eller printer som er i stykker) hvor en Supportafdeling (eller lignende) så arbejder på at løse denne opgave. Nedenstående er de første tanker om features i systemet:
 
