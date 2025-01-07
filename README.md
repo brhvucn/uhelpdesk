@@ -31,8 +31,7 @@ Der skal udvikles et system til at håndtere support tickets med. Selve systemet
 ### Teknologi
 * Bulma til frontend
 * ASP.NET Core MVC
-* CQRS arkitektur
-* Clean Architecture (? afklar lige hvad vi gør med database og bagudkompatabilitet)
+* 3 lagsarkitektur
 * MSSQL, EF Core
 * nUnit unit testing, Moq, TestContainers, kontrakttests
 * GitHub Actions til CI/CD
