@@ -29,5 +29,5 @@ Der skal udvikles et system til at håndtere support tickets med. Selve systemet
 * CQRS arkitektur
 * Clean Architecture (? afklar lige hvad vi gør med database og bagudkompatabilitet)
 * MSSQL, EF Core
-* nUnit unit testing
+* nUnit unit testing, Moq, TestContainers
 * GitHub Actions til CI/CD
