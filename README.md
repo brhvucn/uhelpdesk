@@ -3,6 +3,7 @@ Simple helpdesk service system for small companies, developed by software studen
 
 ## Team
 Projektleder: Brian Hvarregaard (brhv@ucn.dk)
+
 Deltagere:
 
 ## Indledende Scope
