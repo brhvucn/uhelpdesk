@@ -10,8 +10,4 @@
     <PackageReference Include="Ensure.That" Version="10.1.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\uHelpDesk.Utilities\uHelpDesk.Utilities.csproj" />
-  </ItemGroup>
-
 </Project>
