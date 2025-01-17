@@ -24,11 +24,8 @@ namespace uHelpDesk.Models
         //common properties for a customer
         public int Id { get; set; }
         public string? Name { get; set; }
-        public string? Email { get; set; }
-        public string? Phone { get; set; }
-        public string? Address { get; set; }
-        public string? Address2 { get; set; }
-        public string? PostalCode { get; set; }
-        public string? City { get; set; }
+        public string? Email { get; set; }       
+        public IEnumerable<CustomField> CustomFields { get; set; } = new List<CustomField>(); //All the fields available for a customer
+        public IEnumerable<CustomFieldValue> CustomValues { get; set; } = new List<CustomFieldValue>(); //All the values for the fields, may be less than the list
     }
 }

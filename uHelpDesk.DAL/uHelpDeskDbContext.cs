@@ -1,6 +1,6 @@
 ﻿namespace uHelpDesk.DAL
 {
-    public class Class1
+    public class uHelpDeskDbContext
     {
 
     }
