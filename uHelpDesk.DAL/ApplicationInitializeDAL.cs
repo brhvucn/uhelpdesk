@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace uHelpDesk.DAL
 {
-    public static class SetupDAL
+    public static class ApplicationInitializeDAL
     {
         public static IServiceCollection InitializeDAL(this IServiceCollection services, string connectionString)
         {
