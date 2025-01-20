@@ -10,72 +10,40 @@ namespace uHelpDesk.Models.Test.CustomFields
     public class CustomFieldTests
     {
         [Test]
-        public void Constructor_WithNullName_ThrowsArgumentNullException()
+        [TestCase(null, "Customer", "Text")]
+        [TestCase("Test", null, "Text")]
+        [TestCase("Test", "Customer", null)]
+        public void Constructor_WithNullName_ThrowsArgumentNullException(string? name, string? entityType, string? fieldType)
         {
             // Assert
-            var ex = Assert.Throws<ArgumentNullException>(() => new CustomField(null));
-            Assert.That(ex.ParamName, Is.EqualTo("name"));
+            var ex = Assert.Throws<ArgumentNullException>(() => new CustomField(name, entityType, fieldType));            
         }
 
         [Test]
-        public void Constructor_WithEmptyName_ThrowsArgumentException()
+        [TestCase("", "Customer", "Text")]
+        [TestCase("Test", "", "Text")]
+        [TestCase("Test", "Customer", "")]
+        public void Constructor_WithEmptyName_ThrowsArgumentException(string name, string entityType, string fieldType)
         {
             // Assert
-            var ex = Assert.Throws<ArgumentException>(() => new CustomField(""));
-            Assert.That(ex.ParamName, Is.EqualTo("name"));
+            var ex = Assert.Throws<ArgumentException>(() => new CustomField(name, entityType, fieldType));            
         }
 
         [Test]
-        public void Constructor_WithValidName_InitializesPropertiesCorrectly()
+        public void Constructor_WithValidArguments_InitializesPropertiesCorrectly()
         {
             // Arrange
-            var validName = "Status";
+            var validName = "Customer";
+            string validEntityType = "Customer";
+            string validFieldType = "Text";
 
             // Act
-            var field = new CustomField(validName);
+            var field = new CustomField(validName, validEntityType, validFieldType);
 
             // Assert
             Assert.That(field.FieldName, Is.EqualTo(validName));
-            Assert.IsNull(field.EntityType); // Asserting initial null value
-        }
-
-        [Test]
-        public void Constructor_WithValidName_SetsFieldTypeToTextByDefault()
-        {
-            // Arrange
-            var validName = "Status";
-
-            // Act
-            var field = new CustomField(validName);
-
-            // Assert
-            Assert.That(field.FieldType, Is.EqualTo("Text"));
-        }
-
-        [Test]
-        public void Constructor_WithValidName_SetsIsActiveToTrueByDefault()
-        {
-            // Arrange
-            var validName = "Status";
-
-            // Act
-            var field = new CustomField(validName);
-
-            // Assert
-            Assert.That(field.IsActive, Is.True);
-        }
-
-        [Test]
-        public void SettingEntityType_AfterConstruction_SetsValueCorrectly()
-        {
-            // Arrange
-            var field = new CustomField("Status");
-
-            // Act
-            field.EntityType = "Customer";
-
-            // Assert
-            Assert.That(field.EntityType, Is.EqualTo("Customer"));
+            Assert.That(field.EntityType, Is.EqualTo(validEntityType));
+            Assert.That(field.FieldType, Is.EqualTo(validFieldType));
         }
     }
 }

@@ -9,6 +9,11 @@ namespace uHelpDesk.Models
 {
     public class CustomFieldValue : BaseModel
     {
+        public CustomFieldValue()
+        {
+            //defaults
+            this.Value = "New Value";
+        }
         public CustomFieldValue(int customFieldId, string value, CustomField? field = null)
         {
             Ensure.That(customFieldId, nameof(customFieldId)).IsGt(0);

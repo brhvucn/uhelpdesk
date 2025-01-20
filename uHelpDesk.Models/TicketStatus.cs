@@ -9,6 +9,10 @@ namespace uHelpDesk.Models
 {
     public class TicketStatus : BaseModel
     {
+        //empty constructor for EF
+        public TicketStatus()
+        {
+        }
         public TicketStatus(string name)
         {
             Ensure.That(name, nameof(name)).IsNotNullOrEmpty();

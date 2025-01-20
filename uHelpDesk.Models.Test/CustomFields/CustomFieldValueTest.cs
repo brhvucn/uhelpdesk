@@ -9,13 +9,18 @@ namespace uHelpDesk.Models.Test.CustomFields
     [TestFixture]
     public class CustomFieldValueTest
     {
+        private CustomField createValidCustomField()
+        {
+            return new CustomField("Valid Name", "Customer", "Text");
+        }
+
         [Test]
         public void Constructor_WithInvalidCustomFieldId_ThrowsArgumentException()
         {
             // Arrange
             var invalidCustomFieldId = 0;
             var validValue = "Example Value";
-            var validField = new CustomField("Valid Name");
+            var validField = createValidCustomField();
 
             // Act & Assert
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => new CustomFieldValue(invalidCustomFieldId, validValue, validField));
@@ -28,7 +33,7 @@ namespace uHelpDesk.Models.Test.CustomFields
             // Arrange
             var validCustomFieldId = 1;
             var nullValue = (string)null;
-            var validField = new CustomField("Valid Name");
+            var validField = createValidCustomField();
 
             // Act & Assert
             var ex = Assert.Throws<ArgumentNullException>(() => new CustomFieldValue(validCustomFieldId, nullValue, validField));
@@ -41,7 +46,7 @@ namespace uHelpDesk.Models.Test.CustomFields
             // Arrange
             var validCustomFieldId = 1;
             var emptyValue = "";
-            var validField = new CustomField("Valid Name");
+            var validField = createValidCustomField();
 
             // Act & Assert
             var ex = Assert.Throws<ArgumentException>(() => new CustomFieldValue(validCustomFieldId, emptyValue, validField));
@@ -66,7 +71,7 @@ namespace uHelpDesk.Models.Test.CustomFields
             // Arrange
             var validCustomFieldId = 1;
             var validValue = "Example Value";
-            var validField = new CustomField("Valid Name");
+            var validField = createValidCustomField();
 
             // Act
             var customFieldValue = new CustomFieldValue(validCustomFieldId, validValue, validField);

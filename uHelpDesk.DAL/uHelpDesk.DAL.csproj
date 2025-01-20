@@ -21,4 +21,8 @@
     <ProjectReference Include="..\uHelpDesk.Models\uHelpDesk.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

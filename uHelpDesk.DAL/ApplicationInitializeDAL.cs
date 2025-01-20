@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using uHelpDesk.DAL.Contracts;
+using uHelpDesk.DAL.Repositories;
 
 namespace uHelpDesk.DAL
 {
@@ -14,13 +16,14 @@ namespace uHelpDesk.DAL
         public static IServiceCollection InitializeDAL(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<uHelpDeskDbContext>(options =>
-    options.UseSqlServer(connectionString,
-                sqlServerOptions => sqlServerOptions.EnableRetryOnFailure(
-                    maxRetryCount: 5,
-                    maxRetryDelay: TimeSpan.FromSeconds(10),
-                    errorNumbersToAdd: null)));
+                options.UseSqlServer(connectionString,
+                    sqlServerOptions => sqlServerOptions.EnableRetryOnFailure(
+                        maxRetryCount: 5,
+                        maxRetryDelay: TimeSpan.FromSeconds(10),
+                        errorNumbersToAdd: null)));
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options => {
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireDigit = false;
@@ -28,10 +31,9 @@ namespace uHelpDesk.DAL
                 options.Password.RequireUppercase = false;
             })
                 .AddEntityFrameworkStores<uHelpDeskDbContext>();
-
-
-
-            //services.AddScoped<IAsyncInventoryBrandRepository, InventoryBrandRepository>();
+            
+            services.AddScoped<uHelpDeskDbContext, uHelpDeskDbContext>();
+            services.AddScoped<ICustomerAsyncRepository, CustomerAsyncRepository>();
             return services;
         }
     }
