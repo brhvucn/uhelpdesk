@@ -18,6 +18,7 @@ namespace uHelpDesk.DAL
         public DbSet<CustomField> CustomFields { get; set; }
         public DbSet<CustomFieldValue> CustomFieldValues { get; set; }
         public DbSet<TicketStatus> TicketStatuses { get; set; }
+        public DbSet<TicketAnswer> TicketAnswers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
