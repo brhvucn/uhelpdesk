@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using uHelpDesk.DAL;
 
@@ -11,9 +12,11 @@ using uHelpDesk.DAL;
 namespace uHelpDesk.DAL.Migrations
 {
     [DbContext(typeof(uHelpDeskDbContext))]
-    partial class uHelpDeskDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250131101301_TicketAnswer")]
+    partial class TicketAnswer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
