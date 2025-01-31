@@ -38,6 +38,12 @@ namespace uHelpDesk.DAL
                 .HasOne<TicketStatus>()
                 .WithMany()
                 .HasForeignKey(x => x.TicketStatusId);
+
+            //configure relationship between ticket and a list of ticket answers
+            builder.Entity<Ticket>()
+                .HasMany<TicketAnswer>(x => x.TicketAnswers)
+                .WithOne(x => x.Ticket)
+                .HasForeignKey(x => x.TicketId);
         }
     }
 }

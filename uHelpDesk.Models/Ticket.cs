@@ -31,5 +31,6 @@ namespace uHelpDesk.Models
         public Customer? Customer { get; set; }
         public int CustomerId { get; set; }        
         public IEnumerable<CustomFieldValue> CustomValues { get; set; } = new List<CustomFieldValue>(); //All the values for the fields, may be less than the list
+        public IEnumerable<TicketAnswer> TicketAnswers { get; set; } = new List<TicketAnswer>(); //all the answers for this ticket
     }
 }
