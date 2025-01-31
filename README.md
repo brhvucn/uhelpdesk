@@ -37,3 +37,7 @@ Der skal udvikles et system til at håndtere support tickets med. Selve systemet
 * MSSQL, EF Core
 * nUnit unit testing, Moq, TestContainers, kontrakttests
 * GitHub Actions til CI/CD
+
+### Links
+* [Skabelon til admin template](https://justboil.me/bulma-admin-template/free-html-dashboard/)
+* [Bruge SCSS fra Visual Studio](https://www.mikesdotnetting.com/article/367/working-with-sass-in-an-asp-net-core-application#google_vignette)
