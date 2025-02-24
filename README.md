@@ -6,7 +6,15 @@ Projektleder: Brian Hvarregaard (brhv@ucn.dk)
 
 Deltagere:
 
-## Samarbejdspartnere
+## Arbejdsmetode
+Som altid anbefaler vi at man sidder sammen og udvikler. Der er flere patterns i brug og i nogle tilfælde er der behov for avanceret arkitektur. Der er også brug for at man har et godt flow i sin udvikling. Vi ser de bedste resultater når man sidder og udvikler sammen.
+
+## Krav
+* Kode overholder standarder for at bruge abstraktioner (projektlederen laver eksempler på dette)
+* Koden overholder TDD principper og der udvikles Unit Tests til alt kode
+* Master branch beskyttes mod pull requests og alle pull requests skal godkendes inden merge
+* Der bruges feature branching. En branch skal indeholder id nummeret på den tilhørende user story / issue.
+
 
 ## Indledende Scope
 Der skal udvikles et system til at håndtere support tickets med. Selve systemet er et selvstændigt system med brugernavn og password adgang. Det skal være muligt for kunder/medarbejdere at oprette tickets (fx. en computer eller printer som er i stykker) hvor en Supportafdeling (eller lignende) så arbejder på at løse denne opgave. Nedenstående er de første tanker om features i systemet:
