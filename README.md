@@ -9,6 +9,8 @@ Deltagere:
 ## Arbejdsmetode
 Som altid anbefaler vi at man sidder sammen og udvikler. Der er flere patterns i brug og i nogle tilfælde er der behov for avanceret arkitektur. Der er også brug for at man har et godt flow i sin udvikling. Vi ser de bedste resultater når man sidder og udvikler sammen.
 
+* Definition of Ready (DoR): En task har et estimat på 3 timer eller derunder. En task har en titel, en kort beskrivelse og en kort beskrivelse af acceptkriterier.
+
 ## Krav
 * Kode overholder standarder for at bruge abstraktioner (projektlederen laver eksempler på dette)
 * Koden overholder TDD principper og der udvikles Unit Tests til alt kode
