@@ -1,50 +1,155 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - uHelpDesk.Admin</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/uHelpDesk.Admin.styles.css" asp-append-version="true" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin One HTML - Bulma Admin Dashboard</title>
+
+    <!-- Bulma is included -->
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">uHelpDesk.Admin</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
+    <div id="app">
+        <nav id="navbar-main" class="navbar is-fixed-top">
+            <div class="navbar-brand">
+                <a class="navbar-item is-hidden-desktop jb-aside-mobile-toggle">
+                    <span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
+                </a>
+                    <div class="level" style="padding-left:20px">
+                        <div class="level-left">
+                            <div class="level-item">
+                                <h1 class="title">
+                                    Dashboard
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="level-right" style="display: none;">
+                            <div class="level-item"></div>
+                        </div>
+                    </div>
+                              
+            </div>
+            <div class="navbar-brand is-right">
+                <a class="navbar-item is-hidden-desktop jb-navbar-menu-toggle" data-target="navbar-menu">
+                    <span class="icon"><i class="mdi mdi-dots-vertical"></i></span>
+                </a>
+            </div>
+            <div class="navbar-menu fadeIn animated faster" id="navbar-menu" style="border-bottom:1px solid #F8F8F8">
+                <div class="navbar-end">                   
+                    <div class="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
+                        <a class="navbar-link is-arrowless">
+                            <div class="is-user-avatar">
+                                <img src="https://avatars.dicebear.com/v2/initials/john-doe.svg" alt="John Doe">
+                            </div>
+                            <div class="is-user-name"><span>John Doe</span></div>
+                            <span class="icon"><i class="mdi mdi-chevron-down"></i></span>
+                        </a>
+                        <div class="navbar-dropdown">
+                            <a href="profile.html" class="navbar-item">
+                                <span class="icon"><span class="mdi mdi-information-outline"></span></span>
+                                <span>My Profile</span>
+                            </a>
+                            <a class="navbar-item">
+                                <span class="icon"><span class="mdi mdi-information-outline"></span></span>
+                                <span>Settings</span>
+                            </a>
+                            <hr class="navbar-divider">
+                            <a class="navbar-item">
+                                <span class="icon"><span class="mdi mdi-information-outline"></span></span>
+                                <span>Log Out</span>
+                            </a>
+                        </div>
+                    </div>
+                    <a title="Log out" class="navbar-item is-desktop-icon-only">
+                        <span class="icon"><i class="mdi mdi-logout"></i></span>
+                        <span>Log out</span>
+                    </a>
                 </div>
             </div>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+        <aside class="aside is-placed-left is-expanded">
+            <div class="aside-tools">
+                <div class="aside-tools-label">
+                    <span><b>uHelpDesk</b></span>
+                </div>
+            </div>
+            <div class="menu is-menu-main">
+                <p class="menu-label">General</p>
+                <ul class="menu-list">
+                    <li>
+                        <a href="index.html" class="is-active router-link-active has-icon">
+                            <span class="icon">
+                                <span class="mdi mdi-information-outline"></span>
+                            </span>
+                            <span class="menu-item-label">Dashboard</span>
+                        </a>
+                    </li>
+                </ul>
+                <p class="menu-label">Help Desk</p>
+                <ul class="menu-list">
+                    <li>
+                        <a href="#" class="has-icon">
+                            <span class="icon has-update-mark"><span class="mdi mdi-information-outline"></span></span>
+                            <span class="menu-item-label">Tickets</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="has-icon">
+                            <span class="icon"><span class="mdi mdi-information-outline"></span></span>
+                            <span class="menu-item-label">Customers</span>
+                        </a>
+                    </li>                    
+                </ul>
+                <p class="menu-label">Extension</p>
+                <ul class="menu-list">
+                    <li>
+                        <a href="#" class="has-icon">
+                            <span class="icon"><span class="mdi mdi-information-outline"></span></span>
+                            <span class="menu-item-label">Custom Fields</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="has-icon">
+                            <span class="icon"><span class="mdi mdi-information-outline"></span></span>
+                            <span class="menu-item-label">Ticket Status</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="has-icon">
+                            <span class="icon"><span class="mdi mdi-information-outline"></span></span>
+                            <span class="menu-item-label">Integrations</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>        
+        <section class="section is-main-section">
+            @RenderBody()            
+        </section>
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="level">
+                    <div class="level-left">
+                        <div class="level-item">
+                            Administrator v1.1
+                        </div>                        
+                    </div>
+                    <div class="level-right">
+                        <div class="level-item">
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>    
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - uHelpDesk.Admin - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <!-- Icons below are for demo only. Feel free to use any icon pack. Docs: https://bulma.io/documentation/elements/icon/ -->
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">
 </body>
 </html>
