@@ -14,6 +14,7 @@ Som altid anbefaler vi at man sidder sammen og udvikler. Der er flere patterns i
 * Koden overholder TDD principper og der udvikles Unit Tests til alt kode
 * Master branch beskyttes mod pull requests og alle pull requests skal godkendes inden merge
 * Der bruges feature branching. En branch skal indeholder id nummeret på den tilhørende user story / issue.
+* Der skal bruges "Estimater" på en task som skal vise antal timer det tager at implementere en task. Dette punkt skal indgå i `Definition of Ready`
 
 
 ## Indledende Scope
