@@ -4,7 +4,7 @@ using uHelpDesk.Admin.Models;
 
 namespace uHelpDesk.Admin.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -14,7 +14,7 @@ namespace uHelpDesk.Admin.Controllers
         }
 
         public IActionResult Index()
-        {
+        {            
             return View();
         }
 
