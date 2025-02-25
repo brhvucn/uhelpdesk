@@ -1,0 +1,54 @@
+﻿@model LoginVM
+@{
+    Layout = "_LayoutLogin";
+}
+
+<div class="login-layout">
+    <div class="container">
+        <div class="box" style="width:500px;margin:auto">
+            <h1 class="title is-4 has-text-centered">uHelpDesk Login</h1>
+            <form asp-action="DoLogin" asp-controller="Account">
+                <!-- Username Field -->
+                <div class="field">
+                    <label class="label" for="username">Username</label>
+                    <div class="control">
+                        <input id="username" type="text" class="input" name="username" placeholder="Enter your username" required />
+                    </div>
+                </div>
+
+                <!-- Password Field -->
+                <div class="field">
+                    <label class="label" for="password">Password</label>
+                    <div class="control">
+                        <input id="password" type="password" name="password" class="input" placeholder="Enter your password" required />
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="field">
+                    <div class="control">
+                        <button type="submit" class="button is-primary is-fullwidth">
+                            Login
+                        </button>
+                    </div>
+                </div>
+                <!-- Error Message -->
+                @if (Model.Error != null && !string.IsNullOrEmpty(Model.Error))
+                {
+                    <p class="has-text-danger has-text-centered mt-4">
+                        @Model.Error
+                    </p>
+                }
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .login-layout {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+</style>

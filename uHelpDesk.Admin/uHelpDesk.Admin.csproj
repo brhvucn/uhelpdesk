@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-uHelpDesk.Admin-6d19aece-d878-4831-ab04-60f89d5060df</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
