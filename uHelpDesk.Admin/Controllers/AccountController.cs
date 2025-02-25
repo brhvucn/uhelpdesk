@@ -47,7 +47,7 @@ namespace uHelpDesk.Admin.Controllers
         {
             await this.authService.AddRole("Administrator");
             await this.authService.AddRole("Normal");
-            await this.authService.RegisterUserAsync("brian@median.dk", "w26tbh2m", "Administrator");
+            await this.authService.RegisterUserAsync("admin@uhelpdesk.dk", "1q2w3e4r5t", "Administrator");
             this.logger.LogInformation("Created user and roles");
             return "Created user and roles";
         }
