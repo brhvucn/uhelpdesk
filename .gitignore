@@ -400,3 +400,5 @@ FodyWeavers.xsd
 *.sln.iml
 /.gitattributes
 /.gitignore
+/uHelpDesk.Admin/appsettings.local.json
+/uHelpDesk.Admin/appsettings.local.Development.json
