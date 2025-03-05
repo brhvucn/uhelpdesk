@@ -13,7 +13,7 @@ Som altid anbefaler vi at man sidder sammen og udvikler. Der er flere patterns i
 
 ## Krav
 * Kode overholder standarder for at bruge abstraktioner (projektlederen laver eksempler på dette)
-* Koden overholder TDD principper og der udvikles Unit Tests til alt kode
+* Koden overholder TDD principper og der udvikles Unit Tests til alt kode (kode med logik)
 * Master branch beskyttes mod pull requests og alle pull requests skal godkendes inden merge
 * Der bruges feature branching. En branch skal indeholder id nummeret på den tilhørende user story / issue.
 * Der skal bruges "Estimater" på en task som skal vise antal timer det tager at implementere en task. Dette punkt skal indgå i `Definition of Ready`
@@ -31,6 +31,21 @@ Der skal udvikles et system til at håndtere support tickets med. Selve systemet
 * MSSQL, EF Core
 * nUnit unit testing, Moq, TestContainers, kontrakttests
 * GitHub Actions til CI/CD
+
+### UI Regler
+Disse regler er således at der udvikles en konsistent brugergrænseflade for systemet. Hvis der skal afviges sker dette efter aftale. Bemærk at denne tabel altid er under udarbejdelse.
+* Siden skal kunne fungere på både telefon, tablet og desktop
+* Opret, vis og rediger et element har altid sin egen side
+* Indhold på en side vises altid inden i en box, `<div class='box'>`
+* Indhold i en box har overskriften inden i box elementet
+* Tabeller er alt `is-fullwidth is-bordered is-striped is-hoverable`
+* Der gives visuelt feedback ved opret, opdater, slet i form af en toast (dette er bygget ind i BaseController)
+  * Ved slet navigeres tilbage til en oversigt eller lignende (hvor man kom fra)
+* (skal afklares) der laves en custom style til `H1` og `H2` således de passer til designet i størrelse
+* Knapper i tabeller er `is-small` fritstående knapper er grupperede og i normal størrelse
+* Opret knapper (fx. opret ny Ticket, er typisk placeret i toppen af siden, ved siden af overskriften - trukket ud til højre. Er der behov for flere knapper er de grupperede i en enkelt række.
+* Destruktive handlinger (fx. slet) har en bekræftelses popup
+* Alt UI tekst er på engelsk (britisk)
 
 ### Links
 * [Skabelon til admin template](https://justboil.me/bulma-admin-template/free-html-dashboard/)
