@@ -47,6 +47,22 @@ Disse regler er således at der udvikles en konsistent brugergrænseflade for sy
 * Destruktive handlinger (fx. slet) har en bekræftelses popup
 * Alt UI tekst er på engelsk (britisk)
 
+### EFCore og Migrations
+Dette projekt kører "code first", det vil sige at databasen oprettes af koden. Det betyder at når der kommer ændringer til mængden af klasser eller der ændres properties på en klasse, skal databasen opdateres til at afspejle dette. Dette kaldes "migrations", dvs. at migrere fra nuværende version af databasen til næste version af databasen. Alt dette er gemt i kode, således koden styrer databasen. Hvis ikke databasen er up to date, så får man en runtime exception.
+
+#### Ny installation (ingen database)
+* Start med at kigge i appsettings.json og se hvad databasen skal hedde, opret en ny tom database, ret evt. appsettings til.
+* I visual studio åbnes "Package Manager Console" vinduet (det ligger typisk nede i bunden af debug vinduet)
+* I Dropdown i toppen af "Package Manager Console" under "Default project" vælges der "uHelpDesk.DAL"
+* Kør kommandoen: `update-database` - dette vil skrive tabeller i databasen ud køre alle migrations på databasen
+
+#### Rette i en klasse (eller tilføje ny)
+Under udvikling kan man komme ud for at man skal ændre en klasse, således den får nye properties. Det kan også være at der tilføjes flere modelklasser. Dette gøres ved at lave en ny klasse og nedarve fra `BaseModel`. For at kunne udnytte databaseadgangen skal databasekonteksten opdateres: `uHelpDeskDbContent`. Her skal der laves et nyt DbSet<..> og der skal evt. laves fremmednøgler og andre constrains ved at tilføje under metoden: `OnModelCreating`. Herefter skal man tilføje en migration og opdatere databasen.
+* I visual studio åbnes "Package Manager Console" vinduet (det ligger typisk nede i bunden af debug vinduet)
+* I Dropdown i toppen af "Package Manager Console" under "Default project" vælges der "uHelpDesk.DAL"
+* Tilføj en migration ved at køre `add-migration xxx` hvor xxx er navnet på den migration der køres, kig på eksisterende migrations i "Migrations" mappen efter navngivning.
+* Kør kommandoen: `update-database` - dette vil skrive tabeller i databasen ud køre alle migrations på databasen. Nu er databasen opdateret.
+
 ### Links
 * [Skabelon til admin template](https://justboil.me/bulma-admin-template/free-html-dashboard/)
 * [Bruge SCSS fra Visual Studio](https://www.mikesdotnetting.com/article/367/working-with-sass-in-an-asp-net-core-application#google_vignette)
