@@ -1,0 +1,34 @@
+﻿@model uHelpDesk.Admin.ViewModels.Customer.ShowAllCustomersVM;
+
+@{
+    Layout = "_Layout.cshtml";
+}
+<div class="box">
+    <table class="table is-fullwidth is-striped is-bordered is-hoverable">
+        <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var customer in Model.Customers)
+        {
+            <tr>
+                <td>
+                    @customer.Name
+                </td>
+                <td>
+                    <a class="button is-default is-small" asp-controller="Customer" asp-action="ShowCustomer" asp-route-id="@customer.Id">
+                        Show
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
