@@ -1,0 +1,39 @@
+@model uHelpDesk.Admin.ViewModels.Account.RegisterUserVM
+@{
+    Layout = "_LayoutLogin";
+}
+
+<div class="container" style="margin-top:50px">
+    <h2>Create New User</h2>
+    <form asp-action="RegisterUser" method="post">
+        <div class="field">
+            <label class="label" for="Email">Email</label>
+            <div class="control">
+                <input class="input" type="email" id="Email" name="Email" placeholder="Enter Email" required />
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label" for="Password">Password</label>
+            <div class="control">
+                <input class="input" type="password" id="Password" name="Password" placeholder="Enter Password" required />
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label" for="Role">Role</label>
+            <div class="control">
+                <select class="input" id="Role" name="Role">
+                    <option value="Administrator">Administrator</option>
+                    <option value="Normal">Normal</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-primary" type="submit">Create User</button>
+            </div>
+        </div>
+    </form>
+</div>

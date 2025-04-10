@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using uHelpDesk.Admin.Services.Contracts;
 using uHelpDesk.Admin.ViewModels.Account;
+using Microsoft.AspNetCore.Identity;
 
 namespace uHelpDesk.Admin.Controllers
 {
@@ -8,11 +10,13 @@ namespace uHelpDesk.Admin.Controllers
     {
         private readonly IAuthService authService;
         private readonly ILogger<AccountController> logger;
+        
         public AccountController(IAuthService authService, ILogger<AccountController> logger)
         {
             this.authService = authService;
             this.logger = logger;
         }
+        
         public IActionResult Login(bool hasError = false)
         {
             LoginVM model = new LoginVM();
@@ -23,12 +27,12 @@ namespace uHelpDesk.Admin.Controllers
             }
             return View(model);
         }
-
+        
         public IActionResult AccessDenied()
         {
             return View();
         }
-
+        
         public async Task<IActionResult> DoLogin()
         {
             string username = Request.Form["username"];
@@ -42,7 +46,46 @@ namespace uHelpDesk.Admin.Controllers
             ViewData["error"] = "The user could not be logged in with this username and password combination.";
             return RedirectToAction("Login", new { hasError = true });
         }
+        
+        public async Task<IActionResult> Logout()
+        {
+            await this.authService.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+        
+        [Authorize(Roles = "Administrator")]
+        public IActionResult RegisterUser()
+        {
+            return View();
+        }
+        
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> RegisterUser(RegisterUserVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await this.authService.RegisterUserAsync(model.Email, model.Password, model.Role);
+                if (result.Result.Succeeded)
+                {
+                    this.logger.LogInformation("User created successfully.");
+                    TempData["success"] = "User successfully created.";
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    foreach (var error in result.Result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                        this.logger.LogError(error.Description);
+                        TempData["error"] = "User creatíon failed.";
+                    }
+                }
+            }
 
+            return View(model);
+        }
+        
         public async Task<string> SeedAdmin()
         {
             await this.authService.AddRole("Administrator");
