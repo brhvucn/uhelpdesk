@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using uHelpDesk.Admin.Services.Contracts;
 using uHelpDesk.Admin.ViewModels.Account;
@@ -9,13 +10,13 @@ namespace uHelpDesk.Admin.Controllers
     {
         private readonly IAuthService authService;
         private readonly ILogger<AccountController> logger;
-        
+
         public AccountController(IAuthService authService, ILogger<AccountController> logger)
         {
             this.authService = authService;
             this.logger = logger;
         }
-        
+
         public IActionResult Login(bool hasError = false)
         {
             LoginVM model = new LoginVM();
@@ -26,12 +27,12 @@ namespace uHelpDesk.Admin.Controllers
             }
             return View(model);
         }
-        
+
         public IActionResult AccessDenied()
         {
             return View();
         }
-        
+
         public async Task<IActionResult> DoLogin()
         {
             string username = Request.Form["username"];
@@ -42,22 +43,21 @@ namespace uHelpDesk.Admin.Controllers
                 return RedirectToAction("Index", "Home");
             }
             this.logger.LogError("The user could not be logged in with this username and password combination.");
-            ViewData["error"] = "The user could not be logged in with this username and password combination.";
             return RedirectToAction("Login", new { hasError = true });
         }
-        
+
         public async Task<IActionResult> Logout()
         {
             await this.authService.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-        
+
         [Authorize(Roles = "Administrator")]
         public IActionResult RegisterUser()
         {
             return View();
         }
-        
+
         [HttpPost]
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> RegisterUser(RegisterUserVM model)
@@ -69,22 +69,117 @@ namespace uHelpDesk.Admin.Controllers
                 {
                     this.logger.LogInformation("User created successfully.");
                     TempData["success"] = "User successfully created.";
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index");
                 }
-                else
+
+                foreach (var error in result.Result.Errors)
                 {
-                    foreach (var error in result.Result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                        this.logger.LogError(error.Description);
-                        TempData["error"] = "User creatíon failed.";
-                    }
+                    ModelState.AddModelError(string.Empty, error.Description);
+                    this.logger.LogError(error.Description);
                 }
+
+                TempData["error"] = "User creation failed.";
             }
 
             return View(model);
         }
-        
+
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> Index()
+        {
+            var users = await this.authService.GetUsers();
+            var userVMs = new List<UserVM>();
+
+            foreach (var user in users)
+            {
+                var roles = await this.authService.GetRolesAsync(user.Id);
+                userVMs.Add(new UserVM
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    Role = roles.FirstOrDefault() ?? "Unassigned"
+                });
+            }
+
+            return View(userVMs);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> Edit(string id)
+        {
+            var user = await this.authService.GetUserById(id);
+            if (user == null) return NotFound();
+
+            var roles = await this.authService.GetRolesAsync(user.Id);
+
+            var model = new UserVM
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Role = roles.FirstOrDefault()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> Edit(UserVM model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var user = await this.authService.GetUserById(model.Id);
+            if (user == null)
+                return NotFound();
+
+            user.Email = model.Email;
+
+            var currentRoles = await this.authService.GetRolesAsync(user.Id);
+
+            if (!currentRoles.Contains(model.Role))
+            {
+                foreach (var role in currentRoles)
+                {
+                    await this.authService.RemoveFromRoleAsync(user.Id, role);
+                }
+
+                await this.authService.AddToRoleAsync(user.Id, model.Role);
+            }
+
+            var result = await this.authService.UpdateUser(user);
+            if (result.Succeeded)
+            {
+                TempData["success"] = "User updated successfully.";
+                return RedirectToAction("Index");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var result = await this.authService.DeleteUserAsync(id);
+            if (result.Succeeded)
+            {
+                TempData["success"] = "User deleted successfully.";
+            }
+            else
+            {
+                TempData["error"] = "Failed to delete user.";
+            }
+
+            return RedirectToAction("Index");
+        }
+
         public async Task<string> SeedAdmin()
         {
             await this.authService.AddRole("Administrator");

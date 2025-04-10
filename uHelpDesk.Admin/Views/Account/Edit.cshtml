@@ -1,29 +1,22 @@
-@model uHelpDesk.Admin.ViewModels.Account.RegisterUserVM
+@model UserVM
 @{
-    Layout = "_LayoutLogin";
-    ViewData["Title"] = "Create User";
+    ViewData["Title"] = "Edit User";
 }
 
 <section class="section">
     <div class="container">
         <div class="box">
-            <h1 class="title">Create New User</h1>
+            <h1 class="title">Edit User</h1>
 
-            <form asp-action="RegisterUser" method="post">
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="Id" />
+
                 <div class="field">
                     <label class="label">Email</label>
                     <div class="control">
-                        <input asp-for="Email" class="input" placeholder="Enter Email" />
+                        <input asp-for="Email" class="input" />
                     </div>
                     <span asp-validation-for="Email" class="help is-danger"></span>
-                </div>
-
-                <div class="field">
-                    <label class="label">Password</label>
-                    <div class="control">
-                        <input asp-for="Password" type="password" class="input" placeholder="Enter Password" />
-                    </div>
-                    <span asp-validation-for="Password" class="help is-danger"></span>
                 </div>
 
                 <div class="field">
@@ -40,7 +33,7 @@
 
                 <div class="field is-grouped">
                     <div class="control">
-                        <button class="button is-primary" type="submit">Create User</button>
+                        <button type="submit" class="button is-success">Save</button>
                     </div>
                     <div class="control">
                         <a asp-action="Index" class="button is-light">Cancel</a>

@@ -143,12 +143,13 @@
             <p class="menu-label">Admin</p>
             <ul class="menu-list">
                 <li>
-                    <a href="/Account/RegisterUser" class="has-icon">
-                        <span class="icon"><span class="mdi mdi-account-plus"></span></span>
-                        <span class="menu-item-label">Register User</span>
+                    <a href="/Account/Index" class="has-icon">
+                        <span class="icon"><span class="mdi mdi-account-multiple"></span></span>
+                        <span class="menu-item-label">Manage Users</span>
                     </a>
                 </li>
             </ul>
+
         </div>
     </aside>
     <section class="section is-main-section">
@@ -256,5 +257,7 @@
 }
 
 @RenderSection("footerSection", false)
+@RenderSection("Scripts", required: false)
+
 </body>
 </html>
