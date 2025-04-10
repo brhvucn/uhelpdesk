@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using uHelpDesk.Admin.Services.Contracts;
 using uHelpDesk.Admin.ViewModels.Account;
-using Microsoft.AspNetCore.Identity;
 
 namespace uHelpDesk.Admin.Controllers
 {
