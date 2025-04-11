@@ -9,6 +9,20 @@
         <div class="box">
             <h1 class="title">Create New User</h1>
 
+            <!-- Flash messages (from TempData) -->
+            @if (TempData["error"] != null)
+            {
+                <div class="notification is-danger">
+                    @TempData["error"]
+                </div>
+            }
+            @if (TempData["success"] != null)
+            {
+                <div class="notification is-success">
+                    @TempData["success"]
+                </div>
+            }
+
             <form asp-action="RegisterUser" method="post">
                 <div class="field">
                     <label class="label">Email</label>
@@ -50,3 +64,5 @@
         </div>
     </div>
 </section>
+
+}
