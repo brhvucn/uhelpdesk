@@ -187,7 +187,7 @@ namespace uHelpDesk.Admin.Controllers
                 ShowFailMessage("Failed to delete user.");
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Account");
         }
 
         [AllowAnonymous]
