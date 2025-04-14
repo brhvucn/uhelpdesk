@@ -27,6 +27,7 @@ namespace uHelpDesk.Admin.Controllers
             {
                 logger.LogError("Cannot log in with this combination of username and password");
                 model.Error = "Cannot log in with this combination of username and password";
+                this.ShowFailMessage("Cannot log in with this combination of username and password");
             }
 
             return View(model);
@@ -50,7 +51,7 @@ namespace uHelpDesk.Admin.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-
+            this.ShowFailMessage("The user could not be logged in with this username and password combination.");
             logger.LogError("The user could not be logged in with this username and password combination.");
             return RedirectToAction("Login", new { hasError = true });
         }
@@ -89,7 +90,7 @@ namespace uHelpDesk.Admin.Controllers
                     logger.LogError(error.Description);
                 }
 
-                ShowFailMessage("User creation failed.");
+                ShowFailMessage($"User creation failed; {string.Join(", ", result.Result.Errors.Select(x=>x.Description))}");
             }
 
             return View(model);
