@@ -1,17 +1,18 @@
-﻿@model uHelpDesk.Admin.ViewModels.Customer.ShowAllCustomersVM;
+﻿@using uHelpDesk.Admin.Utils
+@model uHelpDesk.Admin.ViewModels.Customer.ShowAllCustomersVM;
 
 @{
-    Layout = "_Layout.cshtml";
+    Layout = "_Layout";
 }
 <div class="box">
     <table class="table is-fullwidth is-striped is-bordered is-hoverable">
         <thead>
         <tr>
             <th>
-                Name
+                @Names.General.TableHeaderName
             </th>
             <th>
-                Action
+                    @Names.General.TableHeaderAction
             </th>
         </tr>
         </thead>
