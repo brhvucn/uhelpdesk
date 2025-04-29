@@ -1,0 +1,67 @@
+@model uHelpDesk.Admin.ViewModels.Account.RegisterUserVM
+@{
+    Layout = "_LayoutLogin";
+    ViewData["Title"] = "Create User";
+}
+
+<section class="section">
+    <div class="container">
+        <div class="box">
+            <h1 class="title">Create New User</h1>
+
+            <!-- Flash messages (from TempData) -->
+            @if (TempData["error"] != null)
+            {
+                <div class="notification is-danger">
+                    @TempData["error"]
+                </div>
+            }
+            @if (TempData["success"] != null)
+            {
+                <div class="notification is-success">
+                    @TempData["success"]
+                </div>
+            }
+
+            <form asp-action="RegisterUser" method="post">
+                <div class="field">
+                    <label class="label">Email</label>
+                    <div class="control">
+                        <input asp-for="Email" class="input" placeholder="Enter Email" />
+                    </div>
+                    <span asp-validation-for="Email" class="help is-danger"></span>
+                </div>
+
+                <div class="field">
+                    <label class="label">Password</label>
+                    <div class="control">
+                        <input asp-for="Password" type="password" class="input" placeholder="Enter Password" />
+                    </div>
+                    <span asp-validation-for="Password" class="help is-danger"></span>
+                </div>
+
+                <div class="field">
+                    <label class="label">Role</label>
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select asp-for="Role">
+                                <option value="Administrator">Administrator</option>
+                                <option value="Normal">Normal</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-primary" type="submit">Create User</button>
+                    </div>
+                    <div class="control">
+                        <a asp-action="Index" class="button is-light">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
