@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\uHelpDesk.BLL\uHelpDesk.BLL.csproj" />
     <ProjectReference Include="..\uHelpDesk.DAL\uHelpDesk.DAL.csproj" />
   </ItemGroup>
 

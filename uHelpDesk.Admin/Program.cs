@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using uHelpDesk.Admin.Services;
 using uHelpDesk.Admin.Services.Contracts;
+using uHelpDesk.BLL;
 using uHelpDesk.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddControllersWithViews();
 //add custom services
 builder.Services.InitializeDAL(connectionString);
+builder.Services.InitializeBLL();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<TicketService>();
 var app = builder.Build();
