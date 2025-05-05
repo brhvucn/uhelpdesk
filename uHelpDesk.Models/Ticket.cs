@@ -33,10 +33,10 @@ namespace uHelpDesk.Models
         public TicketStatus? Status { get; set; }
         public DateTime? AssignedTo { get; set; } = DateTime.UtcNow;
         public Customer? Customer { get; set; }
+        [Display(Name ="Customer Id")]
         public int CustomerId { get; set; }
         public IEnumerable<CustomFieldValue> CustomValues { get; set; } = new List<CustomFieldValue>(); //All the values for the fields, may be less than the list
         public IEnumerable<TicketAnswer> TicketAnswers { get; set; } = new List<TicketAnswer>(); //all the answers for this ticket
-        [Display(Name ="Created At")]
         public DateTime? ResolvedAt { get; set; } = DateTime.UtcNow;
         public TimeSpan? TimeSpent { get; set; }
         

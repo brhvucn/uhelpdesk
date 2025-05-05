@@ -42,6 +42,8 @@ namespace uHelpDesk.Admin.Controllers
         public IActionResult Create()
         {
             ViewBag.StatusList = new SelectList(_context.TicketStatuses.OrderBy(s => s.SortOrder), "Id", "Name");
+
+            ViewBag.CustomerList = new SelectList(_context.Customers.OrderBy(c => c.Id), "Id", "Id");
             return View();
         }
 
