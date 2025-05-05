@@ -11,250 +11,256 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">    
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <style>
+        .logout-button {
+            all: unset;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.5rem 1rem;
+            color: inherit;
+            text-align: left;
+        }
+
+        .logout-button:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+    </style>
 </head>
 <body>
-    <div id="app">
-        <nav id="navbar-main" class="navbar is-fixed-top">
-            <div class="navbar-brand">
-                <a class="navbar-item is-hidden-desktop jb-aside-mobile-toggle">
-                    <span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
-                </a>
-                    <div class="level" style="padding-left:20px">
-                        <div class="level-left">
-                            <div class="level-item">
-                                <h1 class="title">
-                                    Dashboard
-                                </h1>
-                            </div>
-                        </div>
-                        <div class="level-right" style="display: none;">
-                            <div class="level-item"></div>
-                        </div>
+<div id="app">
+    <nav id="navbar-main" class="navbar is-fixed-top">
+        <div class="navbar-brand">
+            <a class="navbar-item is-hidden-desktop jb-aside-mobile-toggle">
+                <span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
+            </a>
+            <div class="level" style="padding-left:20px">
+                <div class="level-left">
+                    <div class="level-item">
+                        <h1 class="title">Dashboard</h1>
                     </div>
-                              
+                </div>
+                <div class="level-right" style="display: none;">
+                    <div class="level-item"></div>
+                </div>
             </div>
-            <div class="navbar-brand is-right">
-                <a class="navbar-item is-hidden-desktop jb-navbar-menu-toggle" data-target="navbar-menu">
-                    <span class="icon"><i class="mdi mdi-dots-vertical"></i></span>
-                </a>
-            </div>
-            <div class="navbar-menu fadeIn animated faster" id="navbar-menu" style="border-bottom:1px solid #F8F8F8">
-                <div class="navbar-end">                   
-                    <div class="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
-                        <a class="navbar-link is-arrowless">
-                            <div class="is-user-avatar">
-                                <img src="https://avatars.dicebear.com/v2/initials/john-doe.svg" alt="John Doe">
-                            </div>
-                            <div class="is-user-name"><span>John Doe</span></div>
-                            <span class="icon"><i class="mdi mdi-chevron-down"></i></span>
-                        </a>
-                        <div class="navbar-dropdown">
-                            <a href="profile.html" class="navbar-item">
-                                <span class="icon"><span class="mdi mdi-information-outline"></span></span>
-                                <span>My Profile</span>
-                            </a>
-                            <a class="navbar-item">
-                                <span class="icon"><span class="mdi mdi-information-outline"></span></span>
-                                <span>Settings</span>
-                            </a>
-                            <hr class="navbar-divider">
-                            <a class="navbar-item">
-                                <span class="icon"><span class="mdi mdi-information-outline"></span></span>
-                                <span>Log Out</span>
-                            </a>
+        </div>
+        <div class="navbar-brand is-right">
+            <a class="navbar-item is-hidden-desktop jb-navbar-menu-toggle" data-target="navbar-menu">
+                <span class="icon"><i class="mdi mdi-dots-vertical"></i></span>
+            </a>
+        </div>
+        <div class="navbar-menu fadeIn animated faster" id="navbar-menu" style="border-bottom:1px solid #F8F8F8">
+            <div class="navbar-end">
+                <div class="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
+                    <a class="navbar-link is-arrowless">
+                        <div class="is-user-avatar">
+                            <img src="https://avatars.dicebear.com/v2/initials/john-doe.svg" alt="John Doe">
                         </div>
-                    </div>
-                    <a title="Log out" class="navbar-item is-desktop-icon-only">
-                        <span class="icon"><i class="mdi mdi-logout"></i></span>
-                        <span>Log out</span>
+                        <div class="is-user-name"><span>John Doe</span></div>
+                        <span class="icon"><i class="mdi mdi-chevron-down"></i></span>
                     </a>
-                </div>
-            </div>
-        </nav>
-        <aside class="aside is-placed-left is-expanded">
-            <div class="aside-tools">
-                <div class="aside-tools-label">
-                    <span><b>uHelpDesk</b></span>
-                </div>
-            </div>
-            <div class="menu is-menu-main">
-                <p class="menu-label">General</p>
-                <ul class="menu-list">
-                    <li>
-                        <a href="index.html" class="is-active router-link-active has-icon">
-                            <span class="icon">
-                                <span class="mdi mdi-information-outline"></span>
-                            </span>
-                            <span class="menu-item-label">Dashboard</span>
-                        </a>
-                    </li>
-                </ul>
-                <p class="menu-label">Help Desk</p>
-                <ul class="menu-list">
-                    <li>
-                        <a href="#" class="has-icon">
-                            <span class="icon has-update-mark"><span class="mdi mdi-information-outline"></span></span>
-                            <span class="menu-item-label">Tickets</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="has-icon">
+                    <div class="navbar-dropdown">
+                        <a href="profile.html" class="navbar-item">
                             <span class="icon"><span class="mdi mdi-information-outline"></span></span>
-                            <span class="menu-item-label">Customers</span>
+                            <span>My Profile</span>
                         </a>
-                    </li>                    
-                </ul>
-                <p class="menu-label">Extension</p>
-                <ul class="menu-list">
-                    <li>
-                        <a href="#" class="has-icon">
+                        <a class="navbar-item">
                             <span class="icon"><span class="mdi mdi-information-outline"></span></span>
-                            <span class="menu-item-label">Custom Fields</span>
+                            <span>Settings</span>
                         </a>
-                    </li>
-                    <li>
-                        <a href="#" class="has-icon">
-                            <span class="icon"><span class="mdi mdi-information-outline"></span></span>
-                            <span class="menu-item-label">Ticket Status</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="has-icon">
-                            <span class="icon"><span class="mdi mdi-information-outline"></span></span>
-                            <span class="menu-item-label">Integrations</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </aside>        
-        <section class="section is-main-section">
-            @RenderBody()            
-        </section>
-        <footer class="footer">
-            <div class="container-fluid">
-                <div class="level">
-                    <div class="level-left">
-                        <div class="level-item">
-                            Administrator v1.1
-                        </div>                        
-                    </div>
-                    <div class="level-right">
-                        <div class="level-item">
-                           
-                        </div>
+                        <hr class="navbar-divider">
+                        <form asp-action="Logout" asp-controller="Account" method="post" style="margin: 0;">
+                            <button type="submit" class="navbar-item logout-button">
+                                <span class="icon"><span class="mdi mdi-logout"></span></span>
+                                <span>Log Out</span>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
-        </footer>
-    </div>    
+        </div>
+    </nav>
+    <aside class="aside is-placed-left is-expanded">
+        <div class="aside-tools">
+            <div class="aside-tools-label">
+                <span><b>uHelpDesk</b></span>
+            </div>
+        </div>
+        <div class="menu is-menu-main">
+            <p class="menu-label">General</p>
+            <ul class="menu-list">
+                <li>
+                    <a href="index.html" class="is-active router-link-active has-icon">
+                        <span class="icon">
+                            <span class="mdi mdi-information-outline"></span>
+                        </span>
+                        <span class="menu-item-label">Dashboard</span>
+                    </a>
+                </li>
+            </ul>
+            <p class="menu-label">Help Desk</p>
+            <ul class="menu-list">
+                <li>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Tickets" asp-action="Index">
+                        <span class="icon has-update-mark"><span class="mdi mdi-information-outline"></span></span>
+                        <span class="menu-item-label">Tickets</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="has-icon">
+                        <span class="icon"><span class="mdi mdi-information-outline"></span></span>
+                        <span class="menu-item-label">Customers</span>
+                    </a>
+                </li>
+            </ul>
+            <p class="menu-label">Extension</p>
+            <ul class="menu-list">
+                <li>
+                    <a href="#" class="has-icon">
+                        <span class="icon"><span class="mdi mdi-information-outline"></span></span>
+                        <span class="menu-item-label">Custom Fields</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="has-icon">
+                        <span class="icon"><span class="mdi mdi-information-outline"></span></span>
+                        <span class="menu-item-label">Ticket Status</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="has-icon">
+                        <span class="icon"><span class="mdi mdi-information-outline"></span></span>
+                        <span class="menu-item-label">Integrations</span>
+                    </a>
+                </li>
+            </ul>
+            @if (User.IsInRole("Administrator"))
+            {
+                <p class="menu-label">Admin</p>
+                <ul class="menu-list">
+                    <li>
+                        <a href="/Account/Index" class="has-icon">
+                            <span class="icon"><span class="mdi mdi-account-multiple"></span></span>
+                            <span class="menu-item-label">Manage Users</span>
+                        </a>
+                    </li>
+                </ul>
+            }
 
-    @* <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css"> *@
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script>
-        toastr.options = {
-            "closeButton": true,
-            "newestOnTop": false,
-            "progressBar": true,
-            "positionClass": "toast-bottom-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
+        </div>
+    </aside>
+    <section class="section is-main-section">
+        @RenderBody()
+    </section>
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="level">
+                <div class="level-left">
+                    <div class="level-item">
+                        Administrator v1.1
+                    </div>
+                </div>
+                <div class="level-right">
+                    <div class="level-item"></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+    toastr.options = {
+        "closeButton": true,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-bottom-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+        $navbarBurgers.forEach(el => {
+            el.addEventListener('click', () => {
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+                el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+            });
+        });
+
+        function openModal($el) {
+            $el.classList.add('is-active');
         }
-    </script>
+
+        function closeModal($el) {
+            $el.classList.remove('is-active');
+        }
+
+        function closeAllModals() {
+            (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+                closeModal($modal);
+            });
+        }
+
+        (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+            const modal = $trigger.dataset.target;
+            const $target = document.getElementById(modal);
+            $trigger.addEventListener('click', () => {
+                openModal($target);
+            });
+        });
+
+        (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+            const $target = $close.closest('.modal');
+            $close.addEventListener('click', () => {
+                closeModal($target);
+            });
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.code === 'Escape') {
+                closeAllModals();
+            }
+        });
+    });
+</script>
+
+@if (TempData["error"] != null)
+{
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-
-            // Get all "navbar-burger" elements
-            const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-            // Add a click event on each of them
-            $navbarBurgers.forEach(el => {
-                el.addEventListener('click', () => {
-
-                    // Get the target from the "data-target" attribute
-                    const target = el.dataset.target;
-                    const $target = document.getElementById(target);
-
-                    // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-                    el.classList.toggle('is-active');
-                    $target.classList.toggle('is-active');
-
-                });
-            });
-
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // Functions to open and close a modal
-            function openModal($el) {
-                $el.classList.add('is-active');
-            }
-
-            function closeModal($el) {
-                $el.classList.remove('is-active');
-            }
-
-            function closeAllModals() {
-                (document.querySelectorAll('.modal') || []).forEach(($modal) => {
-                    closeModal($modal);
-                });
-            }
-
-            // Add a click event on buttons to open a specific modal
-            (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
-                const modal = $trigger.dataset.target;
-                const $target = document.getElementById(modal);
-
-                $trigger.addEventListener('click', () => {
-                    openModal($target);
-                });
-            });
-
-            // Add a click event on various child elements to close the parent modal
-            (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
-                const $target = $close.closest('.modal');
-
-                $close.addEventListener('click', () => {
-                    closeModal($target);
-                });
-            });
-
-            // Add a keyboard event to close all modals
-            document.addEventListener('keydown', (event) => {
-                if (event.code === 'Escape') {
-                    closeAllModals();
-                }
-            });
-        });
+        var errormessage = " @Html.Raw(TempData["error"])";
+        toastr.error(errormessage);
     </script>
-    @if (TempData["error"] != null)
-    {
-        <script>
-            var errormessage = " @Html.Raw(TempData["error"])";
-            toastr.error(errormessage);
-        </script>
+}
 
-    }
+@if (TempData["success"] != null)
+{
+    <script>
+        var successmessage = " @Html.Raw(TempData["success"])";
+        toastr.success(successmessage);
+    </script>
+}
 
-    @if (TempData["success"] != null)
-    {
-        <script>
-            var errormessage = " @Html.Raw(TempData["success"])";
-            toastr.success(errormessage);
-        </script>
+@RenderSection("footerSection", false)
+@RenderSection("Scripts", required: false)
 
-    }
-    @RenderSection("footerSection", false)
 </body>
 </html>

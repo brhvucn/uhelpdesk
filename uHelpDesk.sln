@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "uHelpDesk.DAL.Test", "uHelp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "uHelpDesk.Admin.Test", "uHelpDesk.Admin.Test\uHelpDesk.Admin.Test.csproj", "{4A4CD21C-B7DC-43F3-9900-E358EFB33813}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "uHelpDesk.Utilities", "uHelpDesk.Utilities\uHelpDesk.Utilities.csproj", "{D6F7C9F9-CC3D-4B0A-98B4-D02EB8D1043F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uHelpDesk.Utilities", "uHelpDesk.Utilities\uHelpDesk.Utilities.csproj", "{D6F7C9F9-CC3D-4B0A-98B4-D02EB8D1043F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

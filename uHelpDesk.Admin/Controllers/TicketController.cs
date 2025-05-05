@@ -1,86 +1,62 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using uHelpDesk.Admin.Models;
-using uHelpDesk.Admin.Data;
+using uHelpDesk.Models;
+using uHelpDesk.DAL;
+using uHelpDesk.Admin.Services;
 using System.Collections;
+using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace uHelpDesk.Admin.Controllers
 {
-    [Route("api/controller")]
-    [ApiController]
-    public class TicketController : ControllerBase
+    [Route("Tickets")]
+    [Authorize]
+    public class TicketController : BaseController
     {
-        private readonly uHelpDeskContext _context;
 
-        public TicketController(uHelpDeskContext context)
+        private readonly TicketService _ticketService;
+
+        private readonly uHelpDeskDbContext _context;
+
+        public TicketController(TicketService ticketService, uHelpDeskDbContext context)
         {
+            _ticketService = ticketService;
             _context = context;
         }
 
-        // GET: api/Ticket
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Ticket>>> GetTickets()
+        // GET: /Tickets
+        [HttpGet("")]
+        public async Task<IActionResult> Index()
         {
-            return await _context.Tickets.ToListAsync();
+            var tickets = await _context.Tickets
+                .Include(t => t.Status)
+                .Include(t => t.Customer)
+                .ToListAsync();
+
+            return View(tickets);
         }
 
-        // GET: api/ticket/id
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Ticket>> GetTicket(int id)
+        // GET: Tickets/Create
+        [HttpGet("Create")]
+        public IActionResult Create()
         {
-            var ticket = await _context.Tickets.FindAsync(id);
+            ViewBag.StatusList = new SelectList(_context.TicketStatuses.OrderBy(s => s.SortOrder), "Id", "Name");
+            return View();
+        }
 
-            if (ticket == null)
+        // POST: Tickets/Create
+        [HttpPost("Create")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Ticket ticket)
+        {
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                _context.Add(ticket);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-
-            return ticket;
+            return View(ticket);
         }
-
-        // POST: api/ticket
-        [HttpPost]
-        public async Task<ActionResult<Ticket>> CreateTicket(Ticket ticket)
-        {
-            _context.Tickets.Add(ticket);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetTicket), new { id = ticket.Id }, ticket);
-        }
-
-        // PUT: api/ticket/id
-        [HttpPut]
-        public async Task<IActionResult> UpdateTicket(int id, Ticket updatedTicket)
-        {
-            var ticket = await _context.Tickets.FindAsync(id);
-            if (ticket == null)
-            {
-                return NotFound();
-            }
-
-            ticket.Title = updatedTicket.Title;
-            ticket.Description = updatedTicket.Description;
-
-            await _context.SaveChangesAsync();
-            return NoContent();
-        }
-
-        // DELETE: api/ticket/id
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTicket(int id)
-        {
-            var ticket = await _context.Tickets.FindAsync(id);
-            if (ticket == null)
-            {
-                return NotFound();
-            }
-
-            _context.Tickets.Remove(ticket);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-
     }
 }
