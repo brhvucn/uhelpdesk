@@ -1,17 +1,14 @@
 using Moq;
-using NUnit.Framework;
 using uHelpDesk.Admin.Controllers;
 using uHelpDesk.Admin.Services.Contracts;
 using uHelpDesk.Admin.ViewModels.Account;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
 using uHelpDesk.Admin.Services;
+
 
 namespace uHelpDesk.Admin.Test
 {
@@ -22,7 +19,6 @@ namespace uHelpDesk.Admin.Test
         private Mock<ILogger<AccountController>> _loggerMock;
         private AccountController _controller;
         private ITempDataDictionary _tempData;
-        
 
         public void Dispose()
         {
@@ -39,8 +35,10 @@ namespace uHelpDesk.Admin.Test
             _authServiceMock = new Mock<IAuthService>();
             _loggerMock = new Mock<ILogger<AccountController>>();
 
-            // Set up TempData with a real implementation
-            _tempData = new TempDataDictionary(new DefaultHttpContext(), Mock.Of<ITempDataProvider>());
+            // Mock HttpContext and TempData
+            var tempDataProvider = Mock.Of<ITempDataProvider>();
+            var httpContext = new DefaultHttpContext();
+            _tempData = new TempDataDictionary(httpContext, tempDataProvider);
 
             _controller = new AccountController(_authServiceMock.Object, _loggerMock.Object)
             {
@@ -86,7 +84,7 @@ namespace uHelpDesk.Admin.Test
             Assert.IsTrue(viewResult.ViewData.ModelState.Values.Any(v => v.Errors.Any()));
 
             // Assert that ShowFailMessage was called
-            Assert.AreEqual("User creation failed.", _tempData["error"]);
+            Assert.AreEqual("User creation failed; User already exists.", _tempData["error"]);
         }
 
         [Test]
@@ -147,7 +145,6 @@ namespace uHelpDesk.Admin.Test
             // Assert that ShowSuccessMessage was called
             Assert.AreEqual("User updated successfully.", _tempData["success"]);
         }
-        
 
         [Test]
         public async Task DeleteUser_ShouldRedirectToAccount_WhenUserIsDeleted()
@@ -190,4 +187,3 @@ namespace uHelpDesk.Admin.Test
         }
     }
 }
- 
