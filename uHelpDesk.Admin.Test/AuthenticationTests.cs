@@ -1,18 +1,25 @@
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using Moq;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using uHelpDesk.Admin.Controllers;
 using uHelpDesk.Admin.Services.Contracts;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
+using uHelpDesk.Admin.ViewModels.Account;
 
 namespace uHelpDesk.Admin.Test
 {
+    [TestFixture]
     public class AuthenticationTests : IDisposable
     {
         private Mock<IAuthService> _authServiceMock;
         private Mock<ILogger<AccountController>> _loggerMock;
         private AccountController _controller;
-        
+
         public void Dispose()
         {
             _authServiceMock = null;
@@ -26,18 +33,19 @@ namespace uHelpDesk.Admin.Test
             _authServiceMock = new Mock<IAuthService>();
             _loggerMock = new Mock<ILogger<AccountController>>();
             _controller = new AccountController(_authServiceMock.Object, _loggerMock.Object);
+            
+            // Mock HttpContext and TempData
             var httpContext = new DefaultHttpContext();
+            var tempDataProvider = new Mock<ITempDataProvider>();
+            var tempData = new TempDataDictionary(httpContext, tempDataProvider.Object);
+
             _controller.ControllerContext = new ControllerContext
             {
                 HttpContext = httpContext
             };
+            _controller.TempData = tempData;
         }
-
-        [TearDown]
-        public void TearDown()
-        {
-            Dispose();
-        }
+        
 
         [Test]
         public void Login_Should_Return_View_With_Model()
@@ -46,16 +54,17 @@ namespace uHelpDesk.Admin.Test
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<ViewResult>(result);
-            Assert.IsInstanceOf<uHelpDesk.Admin.ViewModels.Account.LoginVM>(result.Model);
+            Assert.IsInstanceOf<LoginVM>(result.Model);
         }
 
         [Test]
         public void Login_WithError_Should_Set_ModelError()
         {
             var result = _controller.Login(true) as ViewResult;
+            var model = result.Model as LoginVM;
 
-            var model = result.Model as uHelpDesk.Admin.ViewModels.Account.LoginVM;
-
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(model);
             Assert.AreEqual("Cannot log in with this combination of username and password", model.Error);
         }
 
@@ -63,8 +72,7 @@ namespace uHelpDesk.Admin.Test
         public async Task DoLogin_WithValidCredentials_ShouldRedirectToHome()
         {
             // Arrange
-            var context = _controller.ControllerContext.HttpContext;
-            context.Request.Form = new FormCollection(new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>
+            _controller.ControllerContext.HttpContext.Request.Form = new FormCollection(new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>
             {
                 { "username", "test@test.com" },
                 { "password", "password123" }
@@ -88,8 +96,7 @@ namespace uHelpDesk.Admin.Test
         public async Task DoLogin_WithInvalidCredentials_ShouldRedirectToLoginWithError()
         {
             // Arrange
-            var context = _controller.ControllerContext.HttpContext;
-            context.Request.Form = new FormCollection(new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>
+            _controller.ControllerContext.HttpContext.Request.Form = new FormCollection(new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>
             {
                 { "username", "wrong@user.com" },
                 { "password", "wrongpass" }
