@@ -1,0 +1,51 @@
+﻿@model uHelpDesk.Admin.ViewModels.Customer.CreateCustomerVM
+
+@{
+    ViewData["Title"] = "Create New Customer";
+}
+
+<section class="section">
+    <div class="container">
+        <div class="box">
+            <h1 class="title">Create New Customer</h1>
+
+            @if (TempData["error"] != null)
+            {
+                <div class="notification is-danger">@TempData["error"]</div>
+            }
+
+            @if (TempData["success"] != null)
+            {
+                <div class="notification is-success">@TempData["success"]</div>
+            }
+
+            <!-- Update action to "Create" -->
+            <form asp-action="Create" method="post">
+                <div class="field">
+                    <label class="label">Name</label>
+                    <div class="control">
+                        <input asp-for="Name" class="input" placeholder="Enter Name" />
+                    </div>
+                    <span asp-validation-for="Name" class="help is-danger"></span>
+                </div>
+
+                <div class="field">
+                    <label class="label">Email</label>
+                    <div class="control">
+                        <input asp-for="Email" class="input" placeholder="Enter Email" />
+                    </div>
+                    <span asp-validation-for="Email" class="help is-danger"></span>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-primary" type="submit">Create Customer</button>
+                    </div>
+                    <div class="control">
+                        <a asp-action="Index" class="button is-light">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
