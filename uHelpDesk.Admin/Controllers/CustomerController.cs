@@ -14,7 +14,7 @@ namespace uHelpDesk.Admin.Controllers
             this._customerFacade = customerFacade;
         }
 
-        // Index - List of Customers
+        // Index
         public async Task<IActionResult> Index()
         {
             var model = new ShowAllCustomersVM
@@ -24,7 +24,7 @@ namespace uHelpDesk.Admin.Controllers
             return View(model);
         }
 
-        // Show - View customer details
+        // Show
         public async Task<IActionResult> Show(int id)
         {
             var customer = await _customerFacade.GetAllCustomers();
@@ -33,16 +33,16 @@ namespace uHelpDesk.Admin.Controllers
             if (selectedCustomer == null)
                 return NotFound();
 
-            return View(selectedCustomer); // Assuming there is a detailed view for customer
+            return View(selectedCustomer);
         }
 
-        // Create - Show the form for creating a new customer
+        // Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // Create - Post action to save the new customer
+        // Create
         [HttpPost]
         public async Task<IActionResult> Create(CreateCustomerVM model)
         {
@@ -56,7 +56,7 @@ namespace uHelpDesk.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        // Edit - Show the form for editing customer
+        // Edit
         public async Task<IActionResult> Edit(int id)
         {
             var customer = await _customerFacade.GetAllCustomers();
@@ -75,7 +75,7 @@ namespace uHelpDesk.Admin.Controllers
             return View(model);
         }
 
-        // Edit - Post action to save edited customer
+        // Edit
         [HttpPost]
         public async Task<IActionResult> Edit(EditCustomerVM model)
         {
@@ -93,7 +93,7 @@ namespace uHelpDesk.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        // Delete - Show delete confirmation
+        // Delete
         public async Task<IActionResult> Delete(int id)
         {
             var customer = await _customerFacade.GetAllCustomers();
@@ -105,7 +105,7 @@ namespace uHelpDesk.Admin.Controllers
             return View(selectedCustomer);
         }
 
-        // Delete - Post action to confirm and delete customer
+        // Delete
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
