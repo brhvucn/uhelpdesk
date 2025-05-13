@@ -28,42 +28,76 @@
 
             <table class="table is-fullwidth is-striped is-bordered is-hoverable">
                 <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Status</th>
-                        <th>Created At</th>
-                        <th>Customer</th>
-                        <th colspan="4">Actions</th>
-                    </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th>Customer</th>
+                    <th colspan="4">Actions</th>
+                </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@item.Id</td>
-                            <td>@item.Title</td>
-                            <td>@item.Description</td>
-                            <td>@item.Status?.Name</td>
-                            <td>@item.CreatedAt.ToString("g")</td>
-                            <td>@item.CustomerId</td>
-                            <td>
-                                <a class="button is-small is-link" asp-action="TicketsComments" asp-controller="Comments" asp-route-id="@item.Id">Comments</a>
-                            </td>
-                            <td>
-                                <a class="button is-small is-warning" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            </td>
-                            <td>
-                                <a class="button is-small is-info" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                            </td>
-                            <td>
-                                <a class="button is-small is-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                            </td>
-                        </tr>
-                    }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Title</td>
+                        <td>@item.Description</td>
+                        <td>@item.Status?.Name</td>
+                        <td>@item.CreatedAt.ToString("g")</td>
+                        <td>@item.CustomerId</td>
+                        <td>
+                            <a class="button is-small is-link" asp-action="TicketsComments" asp-controller="Comments" asp-route-id="@item.Id">Comments</a>
+                        </td>
+                        <td>
+                            <a class="button is-small is-warning" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        </td>
+                        <td>
+                            <a class="button is-small is-info" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        </td>
+                        <td>
+                            <!-- Trigger Delete Modal -->
+                            <button class="button is-small is-danger" onclick="openDeleteModal('@item.Id')">Delete</button>
+
+                            <!-- Modal for Deletion Confirmation -->
+                            <div id="modal-@item.Id" class="modal">
+                                <div class="modal-background"></div>
+                                <div class="modal-card">
+                                    <header class="modal-card-head">
+                                        <p class="modal-card-title">Confirm Deletion</p>
+                                        <button class="delete" aria-label="close" onclick="closeDeleteModal('@item.Id')"></button>
+                                    </header>
+                                    <section class="modal-card-body">
+                                        <p>Are you sure you want to delete the ticket titled <strong>@item.Title</strong>?</p>
+                                    </section>
+                                    <footer class="modal-card-foot">
+                                        <!-- Form to delete ticket -->
+                                        <form asp-action="Delete" asp-route-id="@item.Id" method="post">
+                                            <button type="submit" class="button is-danger">Delete</button>
+                                            <button type="button" class="button" onclick="closeDeleteModal('@item.Id')">Cancel</button>
+                                        </form>
+                                    </footer>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <script>
+        function openDeleteModal(id) {
+            document.getElementById('modal-' + id).classList.add('is-active');
+        }
+
+        function closeDeleteModal(id) {
+            document.getElementById('modal-' + id).classList.remove('is-active');
+        }
+    </script>
+}

@@ -1,4 +1,4 @@
-﻿@model uHelpDesk.Models.Ticket
+﻿@model uHelpDesk.Admin.ViewModels.Ticket.TicketCreateViewModel
 
 @{
     ViewData["Title"] = "Create Ticket";
@@ -43,7 +43,8 @@
                     <label class="label">Customer</label>
                     <div class="control">
                         <div class="select is-fullwidth">
-                            <select asp-for="CustomerId" asp-items="ViewBag.CustomerList"></select>
+                            <!-- Using CustomerList from ViewModel -->
+                            <select asp-for="CustomerId" asp-items="Model.CustomerList"></select>
                         </div>
                     </div>
                     <span asp-validation-for="CustomerId" class="help is-danger"></span>
@@ -53,10 +54,11 @@
                     <label class="label">Status</label>
                     <div class="control">
                         <div class="select is-fullwidth">
-                            <select asp-for="TicketStatusId" asp-items="ViewBag.StatusList"></select>
+                            <!-- Using StatusList from ViewModel -->
+                            <select asp-for="StatusId" asp-items="Model.StatusList"></select>
                         </div>
                     </div>
-                    <span asp-validation-for="TicketStatusId" class="help is-danger"></span>
+                    <span asp-validation-for="StatusId" class="help is-danger"></span>
                 </div>
 
                 <div class="field is-grouped">

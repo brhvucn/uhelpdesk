@@ -1,46 +1,74 @@
-﻿@model uHelpDesk.Models.Ticket
+﻿@model uHelpDesk.Admin.ViewModels.Ticket.TicketDetailsViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Ticket Details";
 }
 
-<h1>Details</h1>
+<section class="section">
+    <div class="container">
+        <div class="box">
+            <h1 class="title">Ticket Details</h1>
 
-<div>
-    <h4>Ticket</h4>
-    <hr />
-    <div class="row">
-        <table class="table"
-            <tr>
-                 <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                 </th>
-                  <td>
-                    @Html.DisplayFor(model => model.Title)
-                 </td>
-                 <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                 </th>
-                 <td>
-                    @Html.DisplayFor(model => model.Description)
-                 </td>
-            </tr>
-             <tr>
-                 <th>
-                    @Html.DisplayNameFor(model => model.Status)
-                 </th>
-                  <td>
-                    @Html.DisplayFor(model => model.Status)
-                 </td>
-            </tr>
-             <tr>
-            </tr>
+            @if (TempData["error"] != null)
+            {
+                <div class="notification is-danger">@TempData["error"]</div>
+            }
 
-            </table>
+            @if (TempData["success"] != null)
+            {
+                <div class="notification is-success">@TempData["success"]</div>
+            }
 
+            <div class="field">
+                <label class="label">Title</label>
+                <div class="control">
+                    <input class="input" value="@Model.Title" readonly />
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Description</label>
+                <div class="control">
+                    <textarea class="textarea" readonly>@Model.Description</textarea>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Customer</label>
+                <div class="control">
+                    <input class="input" value="@Model.CustomerName" readonly />
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Status</label>
+                <div class="control">
+                    <input class="input" value="@Model.StatusName" readonly />
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Assigned To</label>
+                <div class="control">
+                    <input class="input" value="@Model.AssignedTo" readonly />
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Resolved At</label>
+                <div class="control">
+                    <input class="input" value="@Model.ResolvedAt" readonly />
+                </div>
+            </div>
+
+            <div class="field is-grouped">
+                <div class="control">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="button is-warning">Edit</a>
+                </div>
+                <div class="control">
+                    <a asp-action="Index" class="button is-light">Back to List</a>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-<div>
-    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a class="btn btn-primary" asp-action="Index">Back to List</a>
-</div>
+</section>
