@@ -1,8 +1,17 @@
-﻿namespace uHelpDesk.BLL.Contracts;
-using uHelpDesk.Models;
+﻿using uHelpDesk.Models;
 
-public interface ICustomerFacade
+namespace uHelpDesk.BLL.Contracts
 {
-    Task<IList<Customer>> GetAllCustomers();
-    
+    public interface ICustomerFacade
+    {
+        Task<IList<Customer>> GetAllCustomers();
+
+        Task<Customer?> GetCustomerById(int id);
+
+        Task<bool> CreateCustomer(Customer customer);
+
+        Task<bool> UpdateCustomer(Customer customer);
+
+        Task<bool> DeleteCustomer(int id);
+    }
 }
