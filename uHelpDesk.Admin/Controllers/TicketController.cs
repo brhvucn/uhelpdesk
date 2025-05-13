@@ -39,9 +39,12 @@ namespace uHelpDesk.Admin.Controllers
         [HttpGet("Create")]
         public IActionResult Create()
         {
-            ViewBag.StatusList = new SelectList(_context.TicketStatuses.OrderBy(s => s.SortOrder), "Id", "Name");
-            ViewBag.CustomerList = new SelectList(_context.Customers.OrderBy(c => c.Id), "Id", "Id");
-            return View();
+            var model = new TicketCreateViewModel
+            {
+                StatusList = new SelectList(_context.TicketStatuses.OrderBy(s => s.SortOrder), "Id", "Name"),
+                CustomerList = new SelectList(_context.Customers.OrderBy(c => c.Name), "Id", "Name")
+            };
+            return View(model);
         }
 
         // POST: Tickets/Create
