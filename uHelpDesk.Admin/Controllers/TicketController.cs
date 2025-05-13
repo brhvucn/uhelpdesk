@@ -62,12 +62,13 @@ namespace uHelpDesk.Admin.Controllers
                 _context.Add(ticket);
                 await _context.SaveChangesAsync();
 
-                TempData["success"] = "Ticket created successfully!";
+                ShowSuccessMessage("Ticket created successfully!");  // Show success message
                 return RedirectToAction(nameof(Index));
             }
 
             model.StatusList = new SelectList(await _context.TicketStatuses.ToListAsync(), "Id", "Name");
             model.CustomerList = new SelectList(await _context.Customers.ToListAsync(), "Id", "Name");
+            ShowFailMessage("Please correct the errors in the form.");  // Show failure message
             return View(model);
         }
 
@@ -82,6 +83,7 @@ namespace uHelpDesk.Admin.Controllers
 
             if (ticket == null)
             {
+                ShowFailMessage("Ticket not found.");
                 return NotFound();
             }
 
@@ -106,6 +108,7 @@ namespace uHelpDesk.Admin.Controllers
         {
             if (id != model.Id)
             {
+                ShowFailMessage("Ticket not found.");
                 return NotFound();
             }
 
@@ -114,6 +117,7 @@ namespace uHelpDesk.Admin.Controllers
                 var ticket = await _context.Tickets.FindAsync(id);
                 if (ticket == null)
                 {
+                    ShowFailMessage("Ticket not found.");
                     return NotFound();
                 }
 
@@ -126,10 +130,7 @@ namespace uHelpDesk.Admin.Controllers
                 // Save changes to the database
                 await _context.SaveChangesAsync();
 
-                // Add a success message
-                TempData["success"] = "Ticket updated successfully!";
-
-                // Redirect to the Index page after editing
+                ShowSuccessMessage("Ticket updated successfully!");  // Show success message
                 return RedirectToAction(nameof(Index));
             }
 
@@ -137,6 +138,7 @@ namespace uHelpDesk.Admin.Controllers
             model.StatusList = new SelectList(await _context.TicketStatuses.ToListAsync(), "Id", "Name", model.TicketStatusId);
             model.CustomerList = new SelectList(await _context.Customers.ToListAsync(), "Id", "Name", model.CustomerId);
 
+            ShowFailMessage("Please correct the errors in the form.");  // Show failure message
             return View(model);
         }
 
@@ -151,6 +153,7 @@ namespace uHelpDesk.Admin.Controllers
 
             if (ticket == null)
             {
+                ShowFailMessage("Ticket not found.");
                 return NotFound();
             }
 
@@ -168,7 +171,11 @@ namespace uHelpDesk.Admin.Controllers
                 _context.Tickets.Remove(ticket);
                 await _context.SaveChangesAsync();
 
-                TempData["success"] = "Ticket deleted successfully!";
+                ShowSuccessMessage("Ticket deleted successfully!");  // Show success message
+            }
+            else
+            {
+                ShowFailMessage("Ticket not found.");
             }
 
             return RedirectToAction(nameof(Index));
@@ -185,8 +192,10 @@ namespace uHelpDesk.Admin.Controllers
 
             if (ticket == null)
             {
+                ShowFailMessage("Ticket not found.");
                 return NotFound();
             }
+
             var model = new TicketDetailsViewModel
             {
                 Id = ticket.Id,
