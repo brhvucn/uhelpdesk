@@ -1,22 +1,17 @@
-﻿namespace uHelpDesk.BLL.Contracts
-{
-    using uHelpDesk.Models;
+﻿using uHelpDesk.Models;
 
+namespace uHelpDesk.BLL.Contracts
+{
     public interface ICustomerFacade
     {
-        // Get all customers
         Task<IList<Customer>> GetAllCustomers();
-        
-        // Get a customer by ID
-        Task<Customer> GetCustomerById(int id);
 
-        // Create a new customer
-        Task CreateCustomer(Customer customer);
+        Task<Customer?> GetCustomerById(int id);
 
-        // Update an existing customer
-        Task UpdateCustomer(Customer customer);
+        Task<bool> CreateCustomer(Customer customer);
 
-        // Delete a customer
-        Task DeleteCustomer(int id);
+        Task<bool> UpdateCustomer(Customer customer);
+
+        Task<bool> DeleteCustomer(int id);
     }
 }

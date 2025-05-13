@@ -16,23 +16,47 @@ public class CustomerFacade : ICustomerFacade
         return await _customerRepository.GetAllAsync();
     }
 
-    public Task<Customer> GetCustomerById(int id)
+    public async Task<Customer?> GetCustomerById(int id)
     {
-        throw new NotImplementedException();
+        return await _customerRepository.GetByIdAsync(id);
     }
 
-    public async Task CreateCustomer(Customer customer)
+    public async Task<bool> CreateCustomer(Customer customer)
     {
-        await _customerRepository.AddAsync(customer);
+        try
+        {
+            await _customerRepository.AddAsync(customer);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 
-    public async Task UpdateCustomer(Customer customer)
+    public async Task<bool> UpdateCustomer(Customer customer)
     {
-        await _customerRepository.UpdateAsync(customer);
+        try
+        {
+            await _customerRepository.UpdateAsync(customer);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 
-    public async Task DeleteCustomer(int id)
+    public async Task<bool> DeleteCustomer(int id)
     {
-        await _customerRepository.DeleteAsync(id);
+        try
+        {
+            await _customerRepository.DeleteAsync(id);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

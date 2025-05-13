@@ -14,7 +14,6 @@ namespace uHelpDesk.Admin.Controllers
             this._customerFacade = customerFacade;
         }
 
-        // Index
         public async Task<IActionResult> Index()
         {
             var model = new ShowAllCustomersVM
@@ -24,30 +23,31 @@ namespace uHelpDesk.Admin.Controllers
             return View(model);
         }
 
-        // Show
         public async Task<IActionResult> Show(int id)
         {
-            var customer = await _customerFacade.GetAllCustomers();
-            var selectedCustomer = customer.FirstOrDefault(c => c.Id == id);
-
-            if (selectedCustomer == null)
+            var customer = await _customerFacade.GetCustomerById(id);
+            if (customer == null)
+            {
+                ShowFailMessage("Customer not found.");
                 return NotFound();
+            }
 
-            return View(selectedCustomer);
+            return View(customer);
         }
 
-        // Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // Create
         [HttpPost]
         public async Task<IActionResult> Create(CreateCustomerVM model)
         {
             if (!ModelState.IsValid)
+            {
+                ShowFailMessage("Please correct the errors in the form.");
                 return View(model);
+            }
 
             var customer = new Customer(model.Name, model.Email);
             await _customerFacade.CreateCustomer(customer);
@@ -56,62 +56,76 @@ namespace uHelpDesk.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        // Edit
         public async Task<IActionResult> Edit(int id)
         {
-            var customer = await _customerFacade.GetAllCustomers();
-            var selectedCustomer = customer.FirstOrDefault(c => c.Id == id);
-
-            if (selectedCustomer == null)
+            var customer = await _customerFacade.GetCustomerById(id);
+            if (customer == null)
+            {
+                ShowFailMessage("Customer not found.");
                 return NotFound();
+            }
 
             var model = new EditCustomerVM
             {
-                Id = selectedCustomer.Id,
-                Name = selectedCustomer.Name,
-                Email = selectedCustomer.Email
+                Id = customer.Id,
+                Name = customer.Name,
+                Email = customer.Email
             };
 
             return View(model);
         }
 
-        // Edit
         [HttpPost]
         public async Task<IActionResult> Edit(EditCustomerVM model)
         {
             if (!ModelState.IsValid)
+            {
+                ShowFailMessage("Please correct the errors in the form.");
                 return View(model);
+            }
 
             var customer = new Customer(model.Name, model.Email)
             {
                 Id = model.Id
             };
 
-            await _customerFacade.UpdateCustomer(customer);
+            var success = await _customerFacade.UpdateCustomer(customer);
 
-            ShowSuccessMessage("Customer updated successfully!");
-            return RedirectToAction("Index");
+            if (success)
+            {
+                ShowSuccessMessage("Customer updated successfully!");
+                return RedirectToAction("Index");
+            }
+
+            ShowFailMessage("Failed to update customer.");
+            return View(model);
         }
 
-        // Delete
         public async Task<IActionResult> Delete(int id)
         {
-            var customer = await _customerFacade.GetAllCustomers();
-            var selectedCustomer = customer.FirstOrDefault(c => c.Id == id);
-
-            if (selectedCustomer == null)
+            var customer = await _customerFacade.GetCustomerById(id);
+            if (customer == null)
+            {
+                ShowFailMessage("Customer not found.");
                 return NotFound();
+            }
 
-            return View(selectedCustomer);
+            return View(customer);
         }
 
-        // Delete
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
-            await _customerFacade.DeleteCustomer(id);
+            var success = await _customerFacade.DeleteCustomer(id);
+            if (success)
+            {
+                ShowSuccessMessage("Customer deleted successfully!");
+            }
+            else
+            {
+                ShowFailMessage("Failed to delete customer.");
+            }
 
-            ShowSuccessMessage("Customer deleted successfully!");
             return RedirectToAction("Index");
         }
     }
