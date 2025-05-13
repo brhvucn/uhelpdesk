@@ -1,57 +1,76 @@
 ﻿@model uHelpDesk.Models.Ticket
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Ticket";
 }
 
-<h1>Create</h1>
+<section class="section">
+    <div class="container">
+        <div class="box">
+            <h1 class="title">Create New Ticket</h1>
 
-<h4>Ticket</h4>
-<hr />
-<div class="row">
-    <div class="col-md-12">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="Title" class="control-label"></label>
-                        <input asp-for="Title" class="form-control" />
-                        <span asp-validation-for="Title" class="text-danger"></span>
+            @if (TempData["error"] != null)
+            {
+                <div class="notification is-danger">@TempData["error"]</div>
+            }
+
+            @if (TempData["success"] != null)
+            {
+                <div class="notification is-success">@TempData["success"]</div>
+            }
+
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="notification is-danger is-light"></div>
+
+                <div class="field">
+                    <label class="label">Title</label>
+                    <div class="control">
+                        <input asp-for="Title" class="input" placeholder="Enter Title" />
+                    </div>
+                    <span asp-validation-for="Title" class="help is-danger"></span>
+                </div>
+
+                <!-- Updated Description Field as a Textarea -->
+                <div class="field">
+                    <label class="label">Description</label>
+                    <div class="control">
+                        <textarea asp-for="Description" class="textarea" placeholder="Enter ticket description"></textarea>
+                    </div>
+                    <span asp-validation-for="Description" class="help is-danger"></span>
+                </div>
+
+                <div class="field">
+                    <label class="label">Customer</label>
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select asp-for="CustomerId" asp-items="ViewBag.CustomerList"></select>
+                        </div>
+                    </div>
+                    <span asp-validation-for="CustomerId" class="help is-danger"></span>
+                </div>
+
+                <div class="field">
+                    <label class="label">Status</label>
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select asp-for="TicketStatusId" asp-items="ViewBag.StatusList"></select>
+                        </div>
+                    </div>
+                    <span asp-validation-for="TicketStatusId" class="help is-danger"></span>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button type="submit" class="button is-primary">Create</button>
+                    </div>
+                    <div class="control">
+                        <a asp-action="Index" class="button is-light">Cancel</a>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="Description" class="control-label"></label>
-                        <input asp-for="Description" class="form-control" />
-                        <span asp-validation-for="Description" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="CustomerId" class="control-label"></label>
-                        <select asp-for="CustomerId" asp-items="ViewBag.CustomerList" class="form-control" ></select></">
-                        <span asp-validation-for="CustomerId" class="text-danger" ></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="TicketStatusId" class="control-label"></label>
-                        <select asp-for="TicketStatusId" asp-items="ViewBag.StatusList" class="form-control" ></select>
-                        <span asp-validation-for="TicketStatusId" class="text-danger" ></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+</section>
 
 @section Scripts {
     @{
