@@ -62,7 +62,7 @@
                         <div class="is-user-avatar">
                             <img src="https://avatars.dicebear.com/v2/initials/john-doe.svg" alt="John Doe">
                         </div>
-                        <div class="is-user-name"><span>John Doe</span></div>
+                        <div class="is-user-name"><span>@User.Identity.Name</span></div>
                         <span class="icon"><i class="mdi mdi-chevron-down"></i></span>
                     </a>
                     <div class="navbar-dropdown">
@@ -96,7 +96,7 @@
             <p class="menu-label">General</p>
             <ul class="menu-list">
                 <li>
-                    <a href="index.html" class="is-active router-link-active has-icon">
+                    <a href="/" class="is-active router-link-active has-icon">
                         <span class="icon">
                             <span class="mdi mdi-information-outline"></span>
                         </span>
@@ -107,13 +107,13 @@
             <p class="menu-label">Help Desk</p>
             <ul class="menu-list">
                 <li>
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Tickets" asp-action="Index">
+                    <a href="#" class="has-icon">
                         <span class="icon has-update-mark"><span class="mdi mdi-information-outline"></span></span>
                         <span class="menu-item-label">Tickets</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="has-icon">
+                    <a href="/Customer" class="has-icon">
                         <span class="icon"><span class="mdi mdi-information-outline"></span></span>
                         <span class="menu-item-label">Customers</span>
                     </a>
