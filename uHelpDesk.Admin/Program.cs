@@ -18,6 +18,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.InitializeDAL(connectionString);
 builder.Services.InitializeBLL();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<TicketService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
