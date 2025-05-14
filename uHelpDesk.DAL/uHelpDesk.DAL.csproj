@@ -26,4 +26,8 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Contracts\ICustomFieldValueAsyncRepository.cs" />
+  </ItemGroup>
+
 </Project>

@@ -34,7 +34,9 @@ namespace uHelpDesk.DAL
             
             services.AddScoped<uHelpDeskDbContext, uHelpDeskDbContext>();
             services.AddScoped<ICustomerAsyncRepository, CustomerAsyncRepository>();
-            return services;
+            services.AddScoped<ICustomFieldAsyncRepository, CustomFieldAsyncRepository>();
+			services.AddScoped<ICustomFieldValueAsyncRepository, CustomFieldValueAsyncRepository>();
+			return services;
         }
     }
 }
