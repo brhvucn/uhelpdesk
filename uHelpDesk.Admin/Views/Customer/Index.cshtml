@@ -1,7 +1,7 @@
 ﻿@model uHelpDesk.Admin.ViewModels.Customer.ShowAllCustomersVM
-
 @{
     ViewData["Title"] = "Customer List";
+    Layout = "_Layout";
 }
 
 <section class="section">
@@ -16,59 +16,47 @@
                 </div>
             </div>
 
-            @if (TempData["success"] != null)
-            {
-                <div class="notification is-success">@TempData["success"]</div>
-            }
-
-            @if (TempData["error"] != null)
-            {
-                <div class="notification is-danger">@TempData["error"]</div>
-            }
-
             <table class="table is-fullwidth is-striped is-bordered is-hoverable">
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Actions</th>
-                    </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
                 </thead>
                 <tbody>
-                    @foreach (var customer in Model.Customers)
-                    {
-                        <tr>
-                            <td>@customer.Name</td>
-                            <td>@customer.Email</td>
-                            <td>
-                                <!-- Swapped button colors: Show is warning, Edit is info -->
-                                <a asp-action="Show" asp-route-id="@customer.Id" class="button is-small is-warning">Show</a>
-                                <a asp-action="Edit" asp-route-id="@customer.Id" class="button is-small is-info">Edit</a>
+                @foreach (var customer in Model.Customers)
+                {
+                    <tr>
+                        <td>@customer.Name</td>
+                        <td>@customer.Email</td>
+                        <td>
+                            <a asp-action="Show"  asp-route-id="@customer.Id" class="button is-small is-warning">Show</a>
+                            <a asp-action="Edit"  asp-route-id="@customer.Id" class="button is-small is-info">Edit</a>
 
-                                <!-- Delete with modal -->
-                                <button class="button is-small is-danger" onclick="openModal('@customer.Id')">Delete</button>
+                            <button class="button is-small is-danger" onclick="openModal('@customer.Id')">Delete</button>
 
-                                <div id="modal-@customer.Id" class="modal">
-                                    <div class="modal-background"></div>
-                                    <div class="modal-card">
-                                        <header class="modal-card-head">
-                                            <p class="modal-card-title">Confirm Deletion</p>
-                                            <button class="delete" aria-label="close" onclick="closeModal('@customer.Id')"></button>
-                                        </header>
-                                        <section class="modal-card-body">
-                                            <p>Are you sure you want to delete <strong>@customer.Name</strong>?</p>
-                                        </section>
-                                        <footer class="modal-card-foot">
-                                            <form asp-action="Delete" asp-route-id="@customer.Id" method="post">
-                                                <button type="submit" class="button is-danger">Delete</button>
-                                                <button type="button" class="button" onclick="closeModal('@customer.Id')">Cancel</button>
-                                            </form>
-                                        </footer>
-                                    </div>
+                            <div id="modal-@customer.Id" class="modal">
+                                <div class="modal-background"></div>
+                                <div class="modal-card">
+                                    <header class="modal-card-head">
+                                        <p class="modal-card-title">Confirm Deletion</p>
+                                        <button class="delete" aria-label="close" onclick="closeModal('@customer.Id')"></button>
+                                    </header>
+                                    <section class="modal-card-body">
+                                        <p>Are you sure you want to delete <strong>@customer.Name</strong>?</p>
+                                    </section>
+                                    <footer class="modal-card-foot">
+                                        <form asp-action="Delete" asp-route-id="@customer.Id" method="post">
+                                            <button type="submit" class="button is-danger">Delete</button>
+                                            <button type="button" class="button" onclick="closeModal('@customer.Id')">Cancel</button>
+                                        </form>
+                                    </footer>
                                 </div>
-                            </td>
-                        </tr>
-                    }
+                            </div>
+                        </td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>
@@ -80,9 +68,9 @@
         function openModal(id) {
             document.getElementById('modal-' + id).classList.add('is-active');
         }
-
         function closeModal(id) {
             document.getElementById('modal-' + id).classList.remove('is-active');
         }
     </script>
 }
+ 

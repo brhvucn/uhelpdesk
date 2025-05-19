@@ -1,7 +1,7 @@
 ﻿@model uHelpDesk.Admin.ViewModels.Customer.CreateCustomerVM
-
 @{
     ViewData["Title"] = "Create New Customer";
+    Layout = "_Layout";
 }
 
 <section class="section">
@@ -9,18 +9,7 @@
         <div class="box">
             <h1 class="title">Create New Customer</h1>
 
-            @if (TempData["error"] != null)
-            {
-                <div class="notification is-danger">@TempData["error"]</div>
-            }
-
-            @if (TempData["success"] != null)
-            {
-                <div class="notification is-success">@TempData["success"]</div>
-            }
-
-            <!-- Update action to "Create" -->
-            <form asp-action="Create" method="post">
+            <form asp-action="Create" method="post" novalidate>
                 <div class="field">
                     <label class="label">Name</label>
                     <div class="control">
