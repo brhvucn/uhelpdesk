@@ -41,6 +41,7 @@ namespace uHelpDesk.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateCustomerVM model)
         {
             if (!ModelState.IsValid)
@@ -76,6 +77,7 @@ namespace uHelpDesk.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditCustomerVM model)
         {
             if (!ModelState.IsValid)
@@ -114,6 +116,7 @@ namespace uHelpDesk.Admin.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
             var success = await _customerFacade.DeleteCustomer(id);
