@@ -1,0 +1,78 @@
+﻿@model IList<uHelpDesk.Models.CustomField>
+@{
+    ViewData["Title"] = "Customer Custom Fields";
+    Layout = "_Layout";
+}
+
+<section class="section">
+    <div class="container">
+        <div class="box">
+            <div class="level">
+                <div class="level-left">
+                    <h1 class="title is-4">Customer Custom Fields</h1>
+                </div>
+                <div class="level-right">
+                    <a asp-action="Create" class="button is-primary">Add New</a>
+                </div>
+            </div>
+
+            <table class="table is-fullwidth is-striped is-bordered is-hoverable">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Active</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var field in Model)
+                {
+                    <tr>
+                        <td>@field.FieldName</td>
+                        <td>@field.FieldType</td>
+                        <td>@(field.IsActive ? "Yes" : "No")</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@field.Id" class="button is-small is-info">Edit</a>
+
+                            <button class="button is-small is-danger" onclick="openModal('@field.Id')">Delete</button>
+
+                            <!-- Delete Confirmation Modal -->
+                            <div id="modal-@field.Id" class="modal">
+                                <div class="modal-background"></div>
+                                <div class="modal-card">
+                                    <header class="modal-card-head">
+                                        <p class="modal-card-title">Confirm Deletion</p>
+                                        <button class="delete" aria-label="close" onclick="closeModal('@field.Id')"></button>
+                                    </header>
+                                    <section class="modal-card-body">
+                                        <p>Are you sure you want to delete <strong>@field.FieldName</strong>?</p>
+                                    </section>
+                                    <footer class="modal-card-foot">
+                                        <form asp-action="Delete" asp-route-id="@field.Id" method="post">
+                                            <button type="submit" class="button is-danger">Delete</button>
+                                            <button type="button" class="button" onclick="closeModal('@field.Id')">Cancel</button>
+                                        </form>
+                                    </footer>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        function openModal(id) {
+            document.getElementById('modal-' + id).classList.add('is-active');
+        }
+
+        function closeModal(id) {
+            document.getElementById('modal-' + id).classList.remove('is-active');
+        }
+    </script>
+}
