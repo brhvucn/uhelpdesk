@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using uHelpDesk.Models;
-using uHelpDesk.Admin.ViewModels;
 using uHelpDesk.Admin.ViewModels.CustomField;
 using uHelpDesk.BLL.Contracts;
 
@@ -20,7 +19,14 @@ namespace uHelpDesk.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var fields = await _facade.GetCustomFieldsForEntityAsync(EntityTypes.Customer);
-            return View(fields);
+
+            var vm = new CustomFieldListVM
+            {
+                EntityName = "Customer",
+                Fields = fields.ToList()
+            };
+
+            return View(vm);
         }
 
         public IActionResult Create()
@@ -68,14 +74,16 @@ namespace uHelpDesk.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(new CustomFieldEditVM
+            var vm = new CustomFieldEditVM
             {
                 Id = field.Id,
                 FieldName = field.FieldName,
                 FieldType = field.FieldType,
                 EntityType = field.EntityType,
                 IsActive = field.IsActive
-            });
+            };
+
+            return View(vm);
         }
 
         [HttpPost]
@@ -121,8 +129,16 @@ namespace uHelpDesk.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            await _facade.DeleteCustomFieldAsync(id);
-            ShowSuccessMessage("Custom field deleted successfully.");
+            var success = await _facade.DeleteCustomFieldAsync(id);
+            if (!success)
+            {
+                ShowFailMessage("Failed to delete custom field.");
+            }
+            else
+            {
+                ShowSuccessMessage("Custom field deleted successfully.");
+            }
+
             return RedirectToAction(nameof(Index));
         }
     }
