@@ -107,7 +107,7 @@
             <p class="menu-label">Help Desk</p>
             <ul class="menu-list">
                 <li>
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Tickets" asp-action="Index">
+                    <a href="#" class="has-icon">
                         <span class="icon has-update-mark"><span class="mdi mdi-information-outline"></span></span>
                         <span class="menu-item-label">Tickets</span>
                     </a>
@@ -142,15 +142,15 @@
             </ul>
             @if (User.IsInRole("Administrator"))
             {
-                <p class="menu-label">Admin</p>
-                <ul class="menu-list">
-                    <li>
-                        <a href="/Account/Index" class="has-icon">
-                            <span class="icon"><span class="mdi mdi-account-multiple"></span></span>
-                            <span class="menu-item-label">Manage Users</span>
-                        </a>
-                    </li>
-                </ul>
+            <p class="menu-label">Admin</p>
+            <ul class="menu-list">
+                <li>
+                    <a href="/Account/Index" class="has-icon">
+                        <span class="icon"><span class="mdi mdi-account-multiple"></span></span>
+                        <span class="menu-item-label">Manage Users</span>
+                    </a>
+                </li>
+            </ul>
             }
 
         </div>
@@ -245,18 +245,18 @@
 
 @if (TempData["error"] != null)
 {
-    <script>
-        var errormessage = " @Html.Raw(TempData["error"])";
-        toastr.error(errormessage);
-    </script>
+<script>
+    var errormessage = " @Html.Raw(TempData["error"])";
+    toastr.error(errormessage);
+</script>
 }
 
 @if (TempData["success"] != null)
 {
-    <script>
-        var successmessage = " @Html.Raw(TempData["success"])";
-        toastr.success(successmessage);
-    </script>
+<script>
+    var successmessage = " @Html.Raw(TempData["success"])";
+    toastr.success(successmessage);
+</script>
 }
 
 @RenderSection("footerSection", false)
