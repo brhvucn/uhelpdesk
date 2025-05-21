@@ -28,22 +28,24 @@ public class CustomerController : BaseController
 
         var allFields = await _customerFacade.GetAllCustomFieldsAsync();
 
-        var vm = new EditCustomerCustomFieldsVm
+        var vm = new EditCustomerCustomFieldsVM
         {
             CustomerId = customer.Id,
             CustomerName = customer.Name,
             CustomFields = allFields.Select(field =>
             {
-                var value = customer.CustomFieldValues?
+                var value = customer.CustomValues?
                     .FirstOrDefault(v => v.CustomFieldId == field.Id)?.Value;
 
                 return new CustomFieldEntry
                 {
                     FieldId = field.Id,
+                    FieldName = field.FieldName,
+                    Value = value ?? ""
+                };
+            }).ToList()
+        };
 
-                }
-
-            }
-        }
+        return View(vm);
     }
 }
