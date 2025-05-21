@@ -18,4 +18,32 @@ public class CustomerController : BaseController
         model.Customers = await this._customerFacade.GetAllCustomers();
         return View(model);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> EditCustomFields(int id)
+    {
+        var customer = await _customerFacade.GetCustomerWithCustomFieldsByIdAsync(id);
+        if (customer == null)
+            return NotFound();
+
+        var allFields = await _customerFacade.GetAllCustomFieldsAsync();
+
+        var vm = new EditCustomerCustomFieldsVm
+        {
+            CustomerId = customer.Id,
+            CustomerName = customer.Name,
+            CustomFields = allFields.Select(field =>
+            {
+                var value = customer.CustomFieldValues?
+                    .FirstOrDefault(v => v.CustomFieldId == field.Id)?.Value;
+
+                return new CustomFieldEntry
+                {
+                    FieldId = field.Id,
+
+                }
+
+            }
+        }
+    }
 }
