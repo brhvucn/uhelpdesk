@@ -7,5 +7,5 @@ public interface ICustomerFacade
 
     Task<Customer?> GetCustomerWithCustomFieldsByIdAsync(int id);
     Task<List<CustomField>> GetAllCustomFieldsAsync();
-    Task SaveCustomFieldValueAsync(int customerId, List<CustomFieldEntry> fields);
+    Task SaveCustomFieldValuesAsync(int customerId, List<CustomFieldEntry> fields);
 }

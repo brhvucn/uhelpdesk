@@ -48,4 +48,15 @@ public class CustomerController : BaseController
 
         return View(vm);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> EditCustomFields(EditCustomerCustomFieldsVM vm)
+    {
+        if (!ModelState.IsValid)
+            return View(vm);
+
+        await _customerFacade.SaveCustomFieldValueAsync(vm.CustomerId, vm.CustomFields);
+
+        return RedirectToAction("Index");
+    }
 }
