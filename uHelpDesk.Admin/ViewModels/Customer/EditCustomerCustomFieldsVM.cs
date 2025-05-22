@@ -1,4 +1,7 @@
-﻿namespace uHelpDesk.Admin.ViewModels.Customer
+﻿using System.Collections.Generic;
+using uHelpDesk.Models;
+
+namespace uHelpDesk.Admin.ViewModels.Customer
 {
     public class EditCustomerCustomFieldsVM
     {
@@ -10,8 +13,9 @@
 
     public class CustomFieldEntry
     {
-        public int FieldId { get; set; }
-        public string FieldName { get; set; }
-        public string Value { get; set; }
+        public int CustomFieldId { get; set; }
+        public string FieldName { get; set; } = string.Empty;
+        public string FieldType { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
     }
 }

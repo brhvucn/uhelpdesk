@@ -1,5 +1,6 @@
-﻿namespace uHelpDesk.BLL.Contracts;
+﻿using uHelpDesk.BLL.DTOS;
 using uHelpDesk.Models;
+namespace uHelpDesk.BLL.Contracts;
 
 public interface ICustomerFacade
 {
@@ -7,5 +8,5 @@ public interface ICustomerFacade
 
     Task<Customer?> GetCustomerWithCustomFieldsByIdAsync(int id);
     Task<List<CustomField>> GetAllCustomFieldsAsync();
-    Task SaveCustomFieldValuesAsync(int customerId, List<CustomFieldEntry> fields);
+    Task SaveCustomFieldValuesAsync(int customerId, List<CustomFieldDTO> fields);
 }

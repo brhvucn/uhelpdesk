@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace uHelpDesk.Models
+namespace uHelpDesk.BLL.DTOS
 {
-    public class CustomFieldEntry
+    public class CustomFieldDTO
     {
         public int CustomFieldId { get; set; }
         public string Value { get; set; } = string.Empty;

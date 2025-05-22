@@ -1,6 +1,7 @@
 ﻿using uHelpDesk.BLL.Contracts;
 using uHelpDesk.Models;
 using uHelpDesk.DAL.Contracts;
+using uHelpDesk.BLL.DTOS;
 
 namespace uHelpDesk.BLL
 {
