@@ -50,6 +50,48 @@ public class CustomerController : BaseController
         return View(vm);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> ShowCustomer(int id)
+    {
+        var customer = await _customerFacade.GetCustomerWithCustomFieldsByIdAsync(id);
+        if (customer == null)
+            return NotFound();
+
+        var allFields = await _customerFacade.GetAllCustomFieldsAsync();
+
+        var customField = (customer.CustomValues ?? new List<CustomFieldValue>())
+            .Select(val => new
+            {
+                FieldName = val.CustomField?.FieldName ?? "Unknown",
+                Value = val.Value
+            })
+            .ToList();
+
+        var vm = new ShowCustomerVM
+        {
+            Customer = customer,
+            CustomFields = customField.ToDictionary(x => x.FieldName, x => x.Value),
+            AvailableFields = allFields
+        };
+
+        return View(vm);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AssignCustomField(int id, ShowCustomerVM vm)
+    {
+        await _customerFacade.SaveCustomFieldValuesAsync(id, new List<CustomFieldDTO>
+        {
+            new CustomFieldDTO
+            {
+                CustomFieldId = vm.SelectedCustomFieldId,
+                Value = vm.CustomFieldValue
+            }
+        });
+
+        return RedirectToAction("ShowCustomer", new { id = id });
+    }
+
     [HttpPost]
     public async Task<IActionResult> EditCustomFields(EditCustomerCustomFieldsVM vm)
     {

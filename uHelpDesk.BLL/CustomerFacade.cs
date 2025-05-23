@@ -1,7 +1,9 @@
-﻿using uHelpDesk.BLL.Contracts;
-using uHelpDesk.Models;
-using uHelpDesk.DAL.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using uHelpDesk.BLL.Contracts;
 using uHelpDesk.BLL.DTOS;
+using uHelpDesk.DAL;
+using uHelpDesk.DAL.Contracts;
+using uHelpDesk.Models;
 
 namespace uHelpDesk.BLL
 {
@@ -9,11 +11,13 @@ namespace uHelpDesk.BLL
     {
         private readonly ICustomerAsyncRepository _customerRepository;
         private readonly ICustomFieldAsyncRepository _customFieldRepository;
+        private readonly uHelpDeskDbContext _context;
 
-        public CustomerFacade(ICustomerAsyncRepository customerRepository, ICustomFieldAsyncRepository customFieldRepository)
+        public CustomerFacade(ICustomerAsyncRepository customerRepository, ICustomFieldAsyncRepository customFieldRepository, uHelpDeskDbContext context)
         {
             this._customerRepository = customerRepository;
             this._customFieldRepository = customFieldRepository;
+            this._context = context;
         }
         public async Task<IList<Customer>> GetAllCustomers()
         {
@@ -21,12 +25,11 @@ namespace uHelpDesk.BLL
         }
 
         public async Task<Customer?> GetCustomerWithCustomFieldsByIdAsync(int id)
-        {
-            var customer = await _customerRepository.GetByIdAsync(id);
-            if (customer == null) return null;
-
-            // Optional: fetch custom fields and map them
-            return customer;
+        { 
+            return await _context.Customers
+                .Include(c => c.CustomValues)
+                    .ThenInclude(v => v.CustomField)
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task<List<CustomField>> GetAllCustomFieldsAsync()
