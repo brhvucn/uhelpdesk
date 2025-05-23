@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using uHelpDesk.Admin.ViewModels.Customer;
 using uHelpDesk.BLL.Contracts;
-using uHelpDesk.BLL.DTOS;
 using uHelpDesk.Models;
 
 namespace uHelpDesk.Admin.Controllers;
@@ -14,6 +13,7 @@ public class CustomerController : BaseController
     {
         this._customerFacade = customerFacade;
     }
+
     public async Task<IActionResult> Index()
     {
         ShowAllCustomersVM model = new ShowAllCustomersVM();
@@ -80,14 +80,17 @@ public class CustomerController : BaseController
     [HttpPost]
     public async Task<IActionResult> AssignCustomField(int id, ShowCustomerVM vm)
     {
-        await _customerFacade.SaveCustomFieldValuesAsync(id, new List<CustomFieldDTO>
+        var values = new List<CustomFieldValue>
         {
-            new CustomFieldDTO
+            new CustomFieldValue
             {
                 CustomFieldId = vm.SelectedCustomFieldId,
-                Value = vm.CustomFieldValue
+                Value = vm.CustomFieldValue,
+                EntityId = id
             }
-        });
+        };
+
+        await _customerFacade.SaveCustomFieldValuesAsync(id, values);
 
         return RedirectToAction("ShowCustomer", new { id = id });
     }
@@ -98,13 +101,14 @@ public class CustomerController : BaseController
         if (!ModelState.IsValid)
             return View(vm);
 
-        var dtoList = vm.CustomFields.Select(f => new CustomFieldDTO
+        var values = vm.CustomFields.Select(f => new CustomFieldValue
         {
             CustomFieldId = f.CustomFieldId,
-            Value = f.Value
+            Value = f.Value,
+            EntityId = vm.CustomerId
         }).ToList();
 
-        await _customerFacade.SaveCustomFieldValuesAsync(vm.CustomerId, dtoList);
+        await _customerFacade.SaveCustomFieldValuesAsync(vm.CustomerId, values);
 
         return RedirectToAction("Index");
     }
