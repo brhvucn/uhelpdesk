@@ -1,76 +1,35 @@
-﻿@model uHelpDesk.Admin.ViewModels.Customer.ShowAllCustomersVM
+﻿@using uHelpDesk.Admin.Utils
+@model uHelpDesk.Admin.ViewModels.Customer.ShowAllCustomersVM;
+
 @{
-    ViewData["Title"] = "Customer List";
     Layout = "_Layout";
 }
-
-<section class="section">
-    <div class="container">
-        <div class="box">
-            <div class="level">
-                <div class="level-left">
-                    <h1 class="title is-4">Customers</h1>
-                </div>
-                <div class="level-right">
-                    <a asp-action="Create" class="button is-primary">Create</a>
-                </div>
-            </div>
-
-            <table class="table is-fullwidth is-striped is-bordered is-hoverable">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (var customer in Model.Customers)
-                {
-                    <tr>
-                        <td>@customer.Name</td>
-                        <td>@customer.Email</td>
-                        <td>
-                            <a asp-action="ShowCustomer"  asp-route-id="@customer.Id" class="button is-small is-warning">Show</a>
-                            <a asp-action="Edit"  asp-route-id="@customer.Id" class="button is-small is-info">Edit</a>
-
-                            <button class="button is-small is-danger" onclick="openModal('@customer.Id')">Delete</button>
-
-                            <div id="modal-@customer.Id" class="modal">
-                                <div class="modal-background"></div>
-                                <div class="modal-card">
-                                    <header class="modal-card-head">
-                                        <p class="modal-card-title">Confirm Deletion</p>
-                                        <button class="delete" aria-label="close" onclick="closeModal('@customer.Id')"></button>
-                                    </header>
-                                    <section class="modal-card-body">
-                                        <p>Are you sure you want to delete <strong>@customer.Name</strong>?</p>
-                                    </section>
-                                    <footer class="modal-card-foot">
-                                        <form asp-action="Delete" asp-route-id="@customer.Id" method="post">
-                                            <button type="submit" class="button is-danger">Delete</button>
-                                            <button type="button" class="button" onclick="closeModal('@customer.Id')">Cancel</button>
-                                        </form>
-                                    </footer>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-        </div>
-    </div>
-</section>
-
-@section Scripts {
-    <script>
-        function openModal(id) {
-            document.getElementById('modal-' + id).classList.add('is-active');
+<div class="box">
+    <table class="table is-fullwidth is-striped is-bordered is-hoverable">
+        <thead>
+        <tr>
+            <th>
+                @Names.General.TableHeaderName
+            </th>
+            <th>
+                    @Names.General.TableHeaderAction
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var customer in Model.Customers)
+        {
+            <tr>
+                <td>
+                    @customer.Name
+                </td>
+                <td>
+                    <a class="button is-default is-small" asp-controller="Customer" asp-action="ShowCustomer" asp-route-id="@customer.Id">
+                        Show
+                    </a>
+                </td>
+            </tr>
         }
-        function closeModal(id) {
-            document.getElementById('modal-' + id).classList.remove('is-active');
-        }
-    </script>
-}
- 
+        </tbody>
+    </table>
+</div>
