@@ -1,0 +1,61 @@
+﻿@model uHelpDesk.Admin.ViewModels.CustomField.CustomFieldEditVM
+
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Create Custom Field" : "Edit Custom Field";
+    Layout = "_Layout";
+}
+
+<section class="section">
+    <div class="container">
+        <div class="box">
+            <h1 class="title">@ViewData["Title"]</h1>
+
+            <form asp-action="@ViewContext.RouteData.Values["action"]" method="post">
+                @if (Model.Id != 0)
+                {
+                    <input type="hidden" asp-for="Id" />
+                }
+                <input type="hidden" asp-for="EntityType" />
+
+                <div class="field">
+                    <label class="label" asp-for="FieldName"></label>
+                    <div class="control">
+                        <input asp-for="FieldName" class="input" />
+                    </div>
+                    <p class="help is-danger" asp-validation-for="FieldName"></p>
+                </div>
+
+                <div class="field">
+                    <label class="label" asp-for="FieldType"></label>
+                    <div class="control">
+                        <div class="select">
+                            <select asp-for="FieldType">
+                                <option value="Text">Text</option>
+                                <option value="Number">Number</option>
+                            </select>
+                        </div>
+                    </div>
+                    <p class="help is-danger" asp-validation-for="FieldType"></p>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        <label class="checkbox">
+                            <input asp-for="IsActive" type="checkbox" />
+                            Active
+                        </label>
+                    </div>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button type="submit" class="button is-success">Save</button>
+                    </div>
+                    <div class="control">
+                        <a asp-action="Index" class="button is-light">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
