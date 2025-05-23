@@ -23,7 +23,7 @@ namespace uHelpDesk.DAL.Repositories
                 .ToListAsync();
         }
 
-        public async Task SaveCustomFieldValuesAsync(int customerId, List<CustomFieldValue> values)
+        public async Task SaveValuesForCustomerAsync(int customerId, List<CustomFieldValue> values)
         {
             var existing = await context.CustomFieldValues
                 .Where(v => v.EntityId == customerId)

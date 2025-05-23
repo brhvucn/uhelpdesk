@@ -20,7 +20,7 @@ namespace uHelpDesk.BLL
             return await this._customerRepository.GetAllAsync();
         }
 
-        public async Task<Customer?> GetCustomerWithCustomFieldsByAsync(int id)
+        public async Task<Customer?> GetCustomerWithCustomFieldsByIdAsync(int id)
         {
             var customer = await _customerRepository.GetByIdAsync(id);
             if (customer == null) return null;
@@ -34,7 +34,7 @@ namespace uHelpDesk.BLL
             return (await _customFieldRepository.GetByEntityTypeAsync("Customer")).ToList();
         }
 
-        public async Task SaveCustomFieldValuesAsync(int customerId, List<CustomFieldEntry> entries)
+        public async Task SaveCustomFieldValuesAsync(int customerId, List<CustomFieldDTO> entries)
         {
             var values = entries.Select(entry => new CustomFieldValue
             {
