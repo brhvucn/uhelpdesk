@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using uHelpDesk.Admin.Services;
 using uHelpDesk.Admin.Services.Contracts;
 using uHelpDesk.BLL;
+using uHelpDesk.BLL.Contracts;
 using uHelpDesk.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,8 +19,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.InitializeDAL(connectionString);
 builder.Services.InitializeBLL();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddDbContext<uHelpDeskDbContext>(options
-    => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<ITicketFacade, TicketFacade>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
