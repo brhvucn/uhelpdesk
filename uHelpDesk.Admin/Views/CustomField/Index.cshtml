@@ -1,6 +1,7 @@
-﻿@model IList<uHelpDesk.Models.CustomField>
+﻿@model uHelpDesk.Admin.ViewModels.CustomField.CustomFieldListVM
+
 @{
-    ViewData["Title"] = "Customer Custom Fields";
+    ViewData["Title"] = $"{Model.EntityName} Custom Fields";
     Layout = "_Layout";
 }
 
@@ -9,7 +10,7 @@
         <div class="box">
             <div class="level">
                 <div class="level-left">
-                    <h1 class="title is-4">Customer Custom Fields</h1>
+                    <h1 class="title is-4">@Model.EntityName Custom Fields</h1>
                 </div>
                 <div class="level-right">
                     <a asp-action="Create" class="button is-primary">Add New</a>
@@ -26,7 +27,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach (var field in Model)
+                @foreach (var field in Model.Fields)
                 {
                     <tr>
                         <td>@field.FieldName</td>
@@ -34,10 +35,8 @@
                         <td>@(field.IsActive ? "Yes" : "No")</td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@field.Id" class="button is-small is-info">Edit</a>
-
                             <button class="button is-small is-danger" onclick="openModal('@field.Id')">Delete</button>
 
-                            <!-- Delete Confirmation Modal -->
                             <div id="modal-@field.Id" class="modal">
                                 <div class="modal-background"></div>
                                 <div class="modal-card">
