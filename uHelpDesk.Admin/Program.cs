@@ -18,8 +18,6 @@ builder.Services.AddControllersWithViews();
 builder.Services.InitializeDAL(connectionString);
 builder.Services.InitializeBLL();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddDbContext<uHelpDeskDbContext>(options
-     => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace uHelpDesk.Models
 {
@@ -27,18 +25,12 @@ namespace uHelpDesk.Models
         }
         public string? Title { get; set; }
         public string? Description { get; set; }
-        [Display(Name ="Status")]
         public int TicketStatusId { get; set; }
-        [ForeignKey("TicketStatusId")]
         public TicketStatus? Status { get; set; }
-        public DateTime? AssignedTo { get; set; } = DateTime.UtcNow;
+        public string? AssignedTo { get; set; }
         public Customer? Customer { get; set; }
-        [Display(Name ="Customer Id")]
-        public int CustomerId { get; set; }
+        public int CustomerId { get; set; }        
         public IEnumerable<CustomFieldValue> CustomValues { get; set; } = new List<CustomFieldValue>(); //All the values for the fields, may be less than the list
         public IEnumerable<TicketAnswer> TicketAnswers { get; set; } = new List<TicketAnswer>(); //all the answers for this ticket
-        public DateTime? ResolvedAt { get; set; } = DateTime.UtcNow;
-        public TimeSpan? TimeSpent { get; set; }
-        
     }
 }

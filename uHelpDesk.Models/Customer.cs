@@ -25,7 +25,7 @@ namespace uHelpDesk.Models
         }
         //common properties for a customer
         public string? Name { get; set; }
-        public string? Email { get; set; }
+        public string? Email { get; set; }       
         public IEnumerable<Ticket> Tickets { get; set; } = new List<Ticket>(); //All the tickets for a customer        
         public IEnumerable<CustomFieldValue> CustomValues { get; set; } = new List<CustomFieldValue>(); //All the values for the fields, may be less than the list
     }

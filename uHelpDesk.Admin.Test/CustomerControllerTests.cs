@@ -58,25 +58,23 @@ namespace uHelpDesk.Admin.Test
         }
 
         [Test]
-        public async Task ShowCustomer_ShouldReturnView_WhenCustomerExists()
+        public async Task Show_ShouldReturnView_WhenCustomerExists()
         {
-            var customValues = new List<CustomFieldValue>();
-            var customer = new Customer("Alice", "alice@example.com") { Id = 5, CustomValues = customValues };
-            _customerFacadeMock.Setup(x => x.GetCustomerWithCustomFieldsByIdAsync(5)).ReturnsAsync(customer);
-            _customerFacadeMock.Setup(x => x.GetAllCustomFieldsAsync()).ReturnsAsync(new List<CustomField>());
+            var customer = new Customer("Alice", "alice@example.com") { Id = 5 };
+            _customerFacadeMock.Setup(x => x.GetCustomerById(5)).ReturnsAsync(customer);
 
-            var result = await _controller.ShowCustomer(5) as ViewResult;
+            var result = await _controller.Show(5) as ViewResult;
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOf<ShowCustomerVM>(result.Model);
+            Assert.IsInstanceOf<Customer>(result.Model);
         }
 
         [Test]
-        public async Task ShowCustomer_ShouldReturnNotFound_WhenCustomerDoesNotExist()
+        public async Task Show_ShouldReturnNotFound_WhenCustomerDoesNotExist()
         {
-            _customerFacadeMock.Setup(x => x.GetCustomerWithCustomFieldsByIdAsync(99)).ReturnsAsync((Customer)null);
+            _customerFacadeMock.Setup(x => x.GetCustomerById(99)).ReturnsAsync((Customer)null);
 
-            var result = await _controller.ShowCustomer(99);
+            var result = await _controller.Show(99);
 
             Assert.IsInstanceOf<NotFoundResult>(result);
         }

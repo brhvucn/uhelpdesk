@@ -45,17 +45,6 @@ namespace uHelpDesk.DAL
                 .HasMany<TicketAnswer>(x => x.TicketAnswers)
                 .WithOne(x => x.Ticket)
                 .HasForeignKey(x => x.TicketId);
-
-            builder.Entity<Ticket>()
-                .HasOne(t => t.Status)
-                .WithMany()
-                .HasForeignKey(t => t.TicketStatusId);
-
-            builder.Entity<CustomFieldValue>()
-                .HasOne<Customer>()
-                .WithMany(c => c.CustomValues)
-                .HasForeignKey(v => v.EntityId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
