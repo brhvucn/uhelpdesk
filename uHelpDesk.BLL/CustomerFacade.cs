@@ -24,6 +24,50 @@ public class CustomerFacade : ICustomerFacade
         return await this._customerRepository.GetAllAsync();
     }
 
+    public async Task<Customer?> GetCustomerById(int id)
+    {
+        return await _customerRepository.GetByIdAsync(id);
+    }
+
+    public async Task<bool> CreateCustomer(Customer customer)
+    {
+        try
+        {
+            await _customerRepository.AddAsync(customer);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public async Task<bool> UpdateCustomer(Customer customer)
+    {
+        try
+        {
+            await _customerRepository.UpdateAsync(customer);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public async Task<bool> DeleteCustomer(int id)
+    {
+        try
+        {
+            await _customerRepository.DeleteAsync(id);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
     public async Task<Customer?> GetCustomerWithCustomFieldsByIdAsync(int id)
     {
         return await _context.Customers
