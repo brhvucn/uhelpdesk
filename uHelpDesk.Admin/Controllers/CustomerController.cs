@@ -3,11 +3,11 @@ using uHelpDesk.Admin.ViewModels.Customer;
 using uHelpDesk.BLL.Contracts;
 using uHelpDesk.Models;
 
-namespace uHelpDesk.Admin.Controllers;
-
-public class CustomerController : BaseController
+namespace uHelpDesk.Admin.Controllers
 {
-    private readonly ICustomerFacade _customerFacade;
+    public class CustomerController : BaseController
+    {
+        private readonly ICustomerFacade _customerFacade;
 
     public CustomerController(ICustomerFacade customerFacade)
     {

@@ -1,0 +1,45 @@
+﻿@model uHelpDesk.Admin.ViewModels.Customer.EditCustomerVM
+
+@{
+    ViewData["Title"] = "Edit Customer";
+    Layout = "_Layout";
+    @Html.AntiForgeryToken()
+}
+
+<section class="section">
+    <div class="container">
+        <div class="box">
+            <h1 class="title">Edit Customer</h1>
+
+            <!-- Update action to "Edit" -->
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="field">
+                    <label class="label">Name</label>
+                    <div class="control">
+                        <input asp-for="Name" class="input" />
+                    </div>
+                    <span asp-validation-for="Name" class="help is-danger"></span>
+                </div>
+
+                <div class="field">
+                    <label class="label">Email</label>
+                    <div class="control">
+                        <input asp-for="Email" class="input" />
+                    </div>
+                    <span asp-validation-for="Email" class="help is-danger"></span>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button type="submit" class="button is-success">Save</button>
+                    </div>
+                    <div class="control">
+                        <a asp-action="Index" class="button is-light">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

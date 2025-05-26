@@ -31,7 +31,7 @@
                         <td>@customer.Name</td>
                         <td>@customer.Email</td>
                         <td>
-                            <a asp-action="ShowCustomer"  asp-route-id="@customer.Id" class="button is-small is-warning">Show</a>
+                            <a asp-action="Show"  asp-route-id="@customer.Id" class="button is-small is-warning">Show</a>
                             <a asp-action="Edit"  asp-route-id="@customer.Id" class="button is-small is-info">Edit</a>
 
                             <button class="button is-small is-danger" onclick="openModal('@customer.Id')">Delete</button>
