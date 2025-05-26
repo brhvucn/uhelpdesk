@@ -11,7 +11,6 @@
         <div class="box">
             <h1 class="title">Edit Customer</h1>
 
-            <!-- Update action to "Edit" -->
             <form asp-action="Edit" method="post">
                 <input type="hidden" asp-for="Id" />
 
@@ -38,6 +37,33 @@
                     <div class="control">
                         <a asp-action="Index" class="button is-light">Cancel</a>
                     </div>
+                </div>
+            </form>
+
+            <h2 class="title is-5 mt-6">Assign New Custom Field</h2>
+
+            <form method="post" asp-action="AssignCustomField" asp-route-id="@Model.Id">
+                <div class="field">
+                    <label class="label">Custom Field</label>
+                    <div class="control">
+                        <select asp-for="SelectedCustomFieldId" class="input">
+                            @foreach (var field in Model.AvailableFields)
+                            {
+                                <option value="@field.Id">@field.FieldName (@field.FieldType)</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Value</label>
+                    <div class="control">
+                        <input asp-for="CustomFieldValue" class="input" />
+                    </div>
+                </div>
+
+                <div class="field mt-3">
+                    <button class="button is-primary" type="submit">Assign Field</button>
                 </div>
             </form>
         </div>

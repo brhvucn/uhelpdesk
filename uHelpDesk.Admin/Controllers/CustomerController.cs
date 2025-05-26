@@ -54,11 +54,14 @@ namespace uHelpDesk.Admin.Controllers
                 return NotFound();
             }
 
+            var availableFields = await _customerFacade.GetAllCustomFieldsAsync();
+
             var model = new EditCustomerVM
             {
                 Id = customer.Id,
                 Name = customer.Name,
-                Email = customer.Email
+                Email = customer.Email,
+                AvailableFields = availableFields
             };
 
             return View(model);
@@ -70,6 +73,9 @@ namespace uHelpDesk.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
+                var availableFields = await _customerFacade.GetAllCustomFieldsAsync();
+                model.AvailableFields = availableFields;
+
                 ShowFailMessage("Please correct the errors in the form.");
                 return View(model);
             }
@@ -169,29 +175,36 @@ namespace uHelpDesk.Admin.Controllers
             var vm = new ShowCustomerVM
             {
                 Customer = customer,
-                CustomFields = customField.ToDictionary(x => x.FieldName, x => x.Value),
-                AvailableFields = allFields
+                CustomFields = customField.ToDictionary(x => x.FieldName, x => x.Value)
             };
 
             return View(vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AssignCustomField(int id, ShowCustomerVM vm)
+        public async Task<IActionResult> AssignCustomField(int id, EditCustomerVM vm)
         {
-            var values = new List<CustomFieldValue>
-        {
-            new CustomFieldValue
+            if (!ModelState.IsValid)
             {
-                CustomFieldId = vm.SelectedCustomFieldId,
-                Value = vm.CustomFieldValue,
-                EntityId = id
+                vm.AvailableFields = await _customerFacade.GetAllCustomFieldsAsync();
+                ShowFailMessage("Please correct the errors in the form.");
+                return View("Edit", vm);
             }
-        };
+
+            var values = new List<CustomFieldValue>
+            {
+                new CustomFieldValue
+                {
+                    CustomFieldId = vm.SelectedCustomFieldId,
+                    Value = vm.CustomFieldValue,
+                    EntityId = id
+                }
+            };
 
             await _customerFacade.SaveCustomFieldValuesAsync(id, values);
 
-            return RedirectToAction("ShowCustomer", new { id = id });
+            ShowSuccessMessage("Custom field assigned.");
+            return RedirectToAction("Edit", new { id = id });
         }
 
         [HttpPost]

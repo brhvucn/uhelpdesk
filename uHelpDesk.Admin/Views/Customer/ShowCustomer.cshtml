@@ -5,7 +5,6 @@
 
 <a class="button is-link mt-4" asp-controller="Customer" asp-action="Index">Back to Customer List</a>
 
-
 <h1 class="title is-4">Customer Details</h1>
 
 <div class="box">
@@ -20,19 +19,19 @@
 {
     <table class="table is-fullwidth is-striped is-bordered">
         <thead>
-            <tr>
-                <th>Field Name</th>
-                <th>Value</th>
-            </tr>
+        <tr>
+            <th>Field Name</th>
+            <th>Value</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var field in Model.CustomFields)
-            {
-                <tr>
-                    <td>@field.Key</td>
-                    <td>@field.Value</td>
-                </tr>
-            }
+        @foreach (var field in Model.CustomFields)
+        {
+            <tr>
+                <td>@field.Key</td>
+                <td>@field.Value</td>
+            </tr>
+        }
         </tbody>
     </table>
 }
@@ -40,30 +39,3 @@ else
 {
     <p><em>No custom fields assigned to this customer.</em></p>
 }
-
-<h3 class="title is-5">Assign new Custom Field</h3>
-
-<form method="post" asp-action="AssignCustomField" asp-route-id="@Model.Customer.Id">
-    <div class="field">
-        <label class="label">Custom Field</label>
-        <div class="control">
-            <select asp-for="SelectedCustomFieldId" class="input">
-                @foreach (var field in Model.AvailableFields)
-                {
-                    <option value="@field.Id">@field.FieldName (@field.FieldType)</option>
-                }
-            </select>
-        </div>
-    </div>
-
-    <div class="field">
-        <label class="label">Value</label>
-        <div class="control">
-            <input asp-for="CustomFieldValue" class="input" />
-        </div>
-    </div>
-
-    <div class="field mt-3">
-        <button class="button is-primary" type="submit">Assign Field</button>
-    </div>
-</form>
