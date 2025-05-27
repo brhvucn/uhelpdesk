@@ -3,8 +3,9 @@
 @{
     ViewData["Title"] = "Edit Customer";
     Layout = "_Layout";
-    @Html.AntiForgeryToken()
 }
+
+@Html.AntiForgeryToken()
 
 <section class="section">
     <div class="container">
@@ -42,14 +43,16 @@
 
             <h2 class="title is-5 mt-6">Assign New Custom Field</h2>
 
-            <form method="post" asp-action="AssignCustomField" asp-route-id="@Model.Id">
+            <form method="post" asp-action="AssignCustomField" asp-route-id="@Model.Id" id="assignCustomFieldForm">
                 <div class="field">
                     <label class="label">Custom Field</label>
                     <div class="control">
-                        <select asp-for="SelectedCustomFieldId" class="input">
+                        <select asp-for="SelectedCustomFieldId" class="input" id="customFieldSelect">
                             @foreach (var field in Model.AvailableFields)
                             {
-                                <option value="@field.Id">@field.FieldName (@field.FieldType)</option>
+                                <option value="@field.Id" data-type="@field.FieldType.ToLower()">
+                                    @field.FieldName (@field.FieldType)
+                                </option>
                             }
                         </select>
                     </div>
@@ -58,8 +61,9 @@
                 <div class="field">
                     <label class="label">Value</label>
                     <div class="control">
-                        <input asp-for="CustomFieldValue" class="input" />
+                        <input asp-for="CustomFieldValue" class="input" id="customFieldValueInput" type="text" />
                     </div>
+                    <span asp-validation-for="CustomFieldValue" class="help is-danger"></span>
                 </div>
 
                 <div class="field mt-3">
@@ -69,3 +73,39 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        (() => {
+            const select = document.getElementById('customFieldSelect');
+            const input = document.getElementById('customFieldValueInput');
+
+            function updateInputType() {
+                const selectedOption = select.options[select.selectedIndex];
+                const fieldType = selectedOption.getAttribute('data-type') || 'text';
+
+                if (fieldType === 'number') {
+                    input.type = 'number';
+                    input.step = 'any'; // allow decimals
+                } else if (fieldType === 'date') {
+                    input.type = 'date';
+                    input.step = null;
+                } else {
+                    input.type = 'text';
+                    input.step = null;
+                }
+
+                // Clear the current input value on type change (optional)
+                input.value = '';
+            }
+
+            // Initialize input type on page load
+            updateInputType();
+
+            // Update input type when custom field selection changes
+            select.addEventListener('change', updateInputType);
+        })();
+    </script>
+}
